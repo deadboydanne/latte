@@ -20,23 +20,23 @@ class CCDeveloper implements IController {
   public function Links() {  
     $this->Menu();
     
-    $lr = CLatte::Instance();
+    $lt = CLatte::Instance();
     
     $url = 'developer/links';
-    $current      = $lr->request->CreateUrl($url);
+    $current      = $lt->request->CreateUrl($url);
 
-    $lr->request->cleanUrl = false;
-    $lr->request->querystringUrl = false;    
-    $default      = $lr->request->CreateUrl($url);
+    $lt->request->cleanUrl = false;
+    $lt->request->querystringUrl = false;    
+    $default      = $lt->request->CreateUrl($url);
     
-    $lr->request->cleanUrl = true;
-    $clean        = $lr->request->CreateUrl($url);    
+    $lt->request->cleanUrl = true;
+    $clean        = $lt->request->CreateUrl($url);    
     
-    $lr->request->cleanUrl = false;
-    $lr->request->querystringUrl = true;    
-    $querystring  = $lr->request->CreateUrl($url);
+    $lt->request->cleanUrl = false;
+    $lt->request->querystringUrl = true;    
+    $querystring  = $lt->request->CreateUrl($url);
     
-    $lr->data['main'] .= <<<EOD
+    $lt->data['main'] .= <<<EOD
 <h2>CRequest::CreateUrl()</h2>
 <p>Here is a list of urls created using above method with various settings. All links should lead to
 this same page.</p>
@@ -55,16 +55,16 @@ EOD;
     * Create a method that shows the menu, same for all methods
    */
   private function Menu() {  
-    $lr = CLatte::Instance();
+    $lt = CLatte::Instance();
     $menu = array('developer', 'developer/index', 'developer/links');
     
     $html = null;
     foreach($menu as $val) {
-      $html .= "<li><a href='" . $lr->request->CreateUrl($val) . "'>$val</a>";  
+      $html .= "<li><a href='" . $lt->request->CreateUrl($val) . "'>$val</a>";  
     }
     
-    $lr->data['title'] = "The Developer Controller";
-    $lr->data['main'] = <<<EOD
+    $lt->data['title'] = "The Developer Controller";
+    $lt->data['main'] = <<<EOD
 <h1>The Developer Controller</h1>
 <p>This is what you can do for now:</p>
 <ul>

@@ -12,8 +12,8 @@ class CLatte implements ISingleton {
    * Constructor
    */
   protected function __construct() {
-    // include the site specific config.php and create a ref to $lr to be used by config.php
-    $lr = &$this;
+    // include the site specific config.php and create a ref to $lt to be used by config.php
+    $lt = &$this;
     require(LATTE_SITE_PATH.'/config.php');
   }
   
@@ -83,18 +83,18 @@ class CLatte implements ISingleton {
     $themePath   = LATTE_INSTALL_PATH . "/themes/{$themeName}";
     $themeUrl	 = $this->request->base_url . "themes/{$themeName}";
     
-    // Add stylesheet path to the $lr->data array
+    // Add stylesheet path to the $lt->data array
     $this->data['stylesheet'] = "{$themeUrl}/style.css";
 
     // Include the global functions.php and the functions.php that are part of the theme
-    $lr = &$this;
+    $lt = &$this;
 	include(LATTE_INSTALL_PATH . '/themes/functions.php');
     $functionsPath = "{$themePath}/functions.php";
     if(is_file($functionsPath)) {
       include $functionsPath;
     }
 
-    // Extract $lr->data to own variables and handover to the template file
+    // Extract $lt->data to own variables and handover to the template file
     extract($this->data);      
     include("{$themePath}/default.tpl.php");
   }
