@@ -7,15 +7,15 @@ define('LATTE_SITE_PATH', LATTE_INSTALL_PATH . '/site');
 
 require(LATTE_INSTALL_PATH.'/src/CLatte/bootstrap.php');
 
-$lr = CLatte::Instance();
+$lt = CLatte::Instance();
 
 //
 // PHASE: FRONTCONTROLLER ROUTE
 //
-$lr->FrontControllerRoute();
+$lt->FrontControllerRoute();
 
 
 //
 // PHASE: THEME ENGINE RENDER
 //
-$lr->ThemeEngineRender();
+$lt->ThemeEngineRender();

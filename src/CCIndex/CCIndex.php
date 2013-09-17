@@ -11,7 +11,8 @@ class CCIndex implements IController {
     */
    public function Index() {   
       global $lt;
-      $lt->data['title'] = "The Index Controller";
+	  $lt->data['title'] = "The Index Controller";
+	  $lt->data['main'] = "<h1>The Index Controller</h1>";
    }
 
 }
