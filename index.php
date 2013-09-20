@@ -5,7 +5,7 @@
 define('LATTE_INSTALL_PATH', dirname(__FILE__));
 define('LATTE_SITE_PATH', LATTE_INSTALL_PATH . '/site');
 
-require(LATTE_INSTALL_PATH.'/src/CLatte/bootstrap.php');
+require(LATTE_INSTALL_PATH.'/src/bootstrap.php');
 
 $lt = CLatte::Instance();
 

@@ -4,6 +4,19 @@
 * This file is included right before the themes own functions.php
 */
 
+ 
+/**
+ * Print debuginformation from the framework.
+ */
+function get_debug() {
+  $lt = CLatte::Instance();
+  $html = null;
+  if($lt->config['debug']['display-latte'] === TRUE) {
+    $html = "<hr><h3>Debuginformation</h3><p>The content of CLatte:</p><pre>" . htmlent(print_r($lt, true)) . "</pre>";
+  }    
+  return $html;
+}
+
 /**
 * Create a url by prepending the base_url.
 */

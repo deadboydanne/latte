@@ -39,6 +39,7 @@ class CLatte implements ISingleton {
     $this->request->Init($this->config['base_url']);
     $controller = $this->request->controller;
     $method     = $this->request->method;
+	$formattedMethod = str_replace(array('_', '-'), '', $method);
     $arguments  = $this->request->arguments;
     
     // Is the controller enabled in config.php?
@@ -59,7 +60,7 @@ class CLatte implements ISingleton {
       if($rc->implementsInterface('IController')) {
         if($rc->hasMethod($method)) {
           $controllerObj = $rc->newInstance();
-          $methodObj = $rc->getMethod($method);
+          $methodObj = $rc->getMethod($formattedMethod);
           $methodObj->invokeArgs($controllerObj, $arguments);
         } else {
           die("404. " . get_class() . ' error: Controller does not contain method.');
