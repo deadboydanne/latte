@@ -6,17 +6,22 @@
 
  
 /**
- * Print debuginformation from the framework.
- */
+* Print debuginformation from the framework.
+*/
 function get_debug() {
-  $lt = CLatte::Instance();
+  $lt = CLatte::Instance();  
   $html = null;
-  if($lt->config['debug']['display-latte'] === TRUE) {
-    $html = "<hr><h3>Debuginformation</h3><p>The content of CLatte:</p><pre>" . htmlent(print_r($lt, true)) . "</pre>";
+  if(isset($lt->config['debug']['db-num-queries']) && $lt->config['debug']['db-num-queries'] && isset($lt->db)) {
+    $html .= "<p>Database made " . $lt->db->GetNumQueries() . " queries.</p>";
+  }    
+  if(isset($lt->config['debug']['db-queries']) && $lt->config['debug']['db-queries'] && isset($lt->db)) {
+    $html .= "<p>Database made the following queries.</p><pre>" . implode('<br/><br/>', $lt->db->GetQueries()) . "</pre>";
+  }    
+  if(isset($lt->config['debug']['latte']) && $lt->config['debug']['latte']) {
+    $html .= "<hr><h3>Debuginformation</h3><p>The content of CLydia:</p><pre>" . htmlent(print_r($lt, true)) . "</pre>";
   }    
   return $html;
 }
-
 /**
 * Create a url by prepending the base_url.
 */

@@ -23,7 +23,9 @@ $lt->config['url_type'] = 1;
 /**
  * Set what to show as debug or developer information in the get_debug() theme helper.
  */
-$lt->config['debug']['display-latte'] = false;
+$lt->config['debug']['latte'] = true;
+$lt->config['debug']['db-num-queries'] = true;
+$lt->config['debug']['db-queries'] = true;
 
 /**
  * Set a base_url to use another than the default calculated

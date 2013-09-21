@@ -15,6 +15,11 @@ class CLatte implements ISingleton {
     // include the site specific config.php and create a ref to $lt to be used by config.php
     $lt = &$this;
     require(LATTE_SITE_PATH.'/config.php');
+
+    // Create a database object.
+      if(isset($this->config['database'][0]['dsn'])) {
+        $this->db = new CMDatabase($this->config['database'][0]['dsn']);
+     }
   }
   
   

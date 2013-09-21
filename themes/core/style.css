@@ -9,7 +9,7 @@
  */
 html{background-color:#e3d2b4;}
 body{margin:0;padding:0;color:#140b04;background-color:#fefefe;
-  font: 1em Verdana, Arial, Helvetica, sans-serif;}
+  font: 1em Verdana, Arial, Helvetica, sans-serif;background-image:url(background.png);background-repeat:repeat-y;background-position: center top;}
 
 #wrap-header {}
 #wrap-main {}
@@ -19,7 +19,7 @@ body{margin:0;padding:0;color:#140b04;background-color:#fefefe;
 #main,
 #footer {margin:0 auto;width:970px;padding:8px;}
 #main,
-#footer {margin-bottom:16px;}
+#footer {margin-bottom:0px;}
 
 #header,
 #main {background-color:#fefefe;}
@@ -36,7 +36,7 @@ body{margin:0;padding:0;color:#140b04;background-color:#fefefe;
 .site-title,
 .site-slogan {display:table-cell;width:inherit;vertical-align:middle;text-align:left;}
 
-.site-logo {}
+.site-logo {margin:-3px;padding:0px;border:0;}
 .site-title,
 .site-slogan {font-family:Arial;line-height:0;padding-left:0px;padding-top:20px;color:#140b04;}
 .site-slogan {padding-left:20px;padding-top:48px;}
