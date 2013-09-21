@@ -1,32 +1,79 @@
 <?php
 /**
-* Helpers for theming, available for all themes in their template files and functions.php.
-* This file is included right before the themes own functions.php
-*/
-
+ * Helpers for theming, available for all themes in their template files and functions.php.
+ * This file is included right before the themes own functions.php
+ */
  
+
 /**
-* Print debuginformation from the framework.
-*/
+ * Print debuginformation from the framework.
+ */
 function get_debug() {
+  // Only if debug is wanted.
   $lt = CLatte::Instance();  
+  if(empty($lt->config['debug'])) {
+    return;
+  }
+  
+  // Get the debug output
   $html = null;
   if(isset($lt->config['debug']['db-num-queries']) && $lt->config['debug']['db-num-queries'] && isset($lt->db)) {
-    $html .= "<p>Database made " . $lt->db->GetNumQueries() . " queries.</p>";
+    $flash = $lt->session->GetFlash('database_numQueries');
+    $flash = $flash ? "$flash + " : null;
+    $html .= "<p>Database made $flash" . $lt->db->GetNumQueries() . " queries.</p>";
   }    
   if(isset($lt->config['debug']['db-queries']) && $lt->config['debug']['db-queries'] && isset($lt->db)) {
-    $html .= "<p>Database made the following queries.</p><pre>" . implode('<br/><br/>', $lt->db->GetQueries()) . "</pre>";
+    $flash = $lt->session->GetFlash('database_queries');
+    $queries = $lt->db->GetQueries();
+    if($flash) {
+      $queries = array_merge($flash, $queries);
+    }
+    $html .= "<p>Database made the following queries.</p><pre>" . implode('<br/><br/>', $queries) . "</pre>";
+  }    
+  if(isset($lt->config['debug']['timer']) && $lt->config['debug']['timer']) {
+    $html .= "<p>Page was loaded in " . round(microtime(true) - $lt->timer['first'], 5)*1000 . " msecs.</p>";
   }    
   if(isset($lt->config['debug']['latte']) && $lt->config['debug']['latte']) {
-    $html .= "<hr><h3>Debuginformation</h3><p>The content of CLydia:</p><pre>" . htmlent(print_r($lt, true)) . "</pre>";
+    $html .= "<hr><h3>Debuginformation</h3><p>The content of CLatte:</p><pre>" . htmlent(print_r($lt, true)) . "</pre>";
+  }    
+  if(isset($lt->config['debug']['session']) && $lt->config['debug']['session']) {
+    $html .= "<hr><h3>SESSION</h3><p>The content of CLatte->session:</p><pre>" . htmlent(print_r($lt->session, true)) . "</pre>";
+    $html .= "<p>The content of \$_SESSION:</p><pre>" . htmlent(print_r($_SESSION, true)) . "</pre>";
   }    
   return $html;
 }
+
+
 /**
-* Create a url by prepending the base_url.
-*/
-function base_url($url) {
+ * Get messages stored in flash-session.
+ */
+function get_messages_from_session() {
+  $messages = CLatte::Instance()->session->GetMessages();
+  $html = null;
+  if(!empty($messages)) {
+    foreach($messages as $val) {
+      $valid = array('info', 'notice', 'success', 'warning', 'error', 'alert');
+      $class = (in_array($val['type'], $valid)) ? $val['type'] : 'info';
+      $html .= "<div class='$class'>{$val['message']}</div>\n";
+    }
+  }
+  return $html;
+}
+
+
+/**
+ * Prepend the base_url.
+ */
+function base_url($url=null) {
   return CLatte::Instance()->request->base_url . trim($url, '/');
+}
+
+
+/**
+ * Create a url to an internal resource.
+ */
+function create_url($url=null) {
+  return CLatte::Instance()->request->CreateUrl($url);
 }
 
 
@@ -38,16 +85,18 @@ function theme_url($url) {
   return "{$lt->request->base_url}themes/{$lt->config['theme']['name']}/{$url}";
 }
 
+
 /**
-* Return the current url.
-*/
+ * Return the current url.
+ */
 function current_url() {
   return CLatte::Instance()->request->current_url;
 }
 
+
 /**
-* Render all views.
-*/
+ * Render all views.
+ */
 function render_views() {
   return CLatte::Instance()->views->Render();
 }

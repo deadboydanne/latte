@@ -4,6 +4,7 @@
  *
  */
 
+
 /**
  * Set level of error reporting
  */
@@ -26,6 +27,7 @@ $lt->config['url_type'] = 1;
 $lt->config['debug']['latte'] = true;
 $lt->config['debug']['db-num-queries'] = true;
 $lt->config['debug']['db-queries'] = true;
+$lt->config['debug']['timer'] = true;
 
 /**
  * Set a base_url to use another than the default calculated
@@ -36,6 +38,7 @@ $lt->config['base_url'] = null;
  * Define session name
  */
 $lt->config['session_name'] = preg_replace('/[:\.\/-_]/', '', $_SERVER["SERVER_NAME"]);
+$lt->config['session_key']  = 'latte';
 
 /**
  * Define server timezone
@@ -80,3 +83,4 @@ $lt->config['theme'] = array(
 * Set database(s).
 */
 $lt->config['database'][0]['dsn'] = 'sqlite:' . LATTE_SITE_PATH . '/data/.ht.sqlite';
+
