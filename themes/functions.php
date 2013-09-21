@@ -24,6 +24,15 @@ function base_url($url) {
   return CLatte::Instance()->request->base_url . trim($url, '/');
 }
 
+
+/**
+ * Prepend the theme_url, which is the url to the current theme directory.
+ */
+function theme_url($url) {
+  $lt = CLatte::Instance();
+  return "{$lt->request->base_url}themes/{$lt->config['theme']['name']}/{$url}";
+}
+
 /**
 * Return the current url.
 */

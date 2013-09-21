@@ -1,8 +1,15 @@
 <?php
 /**
-* Helpers for the template file.
-*/
+ * Helpers for the template file.
+ */
 
-
-$lt->data['header'] = '<h1>Header: Latte</h1>';
-$lt->data['footer'] = '<p>Footer: &copy; Latte by Andreas Carlsson (<a href="mailto:andreasc89@gmail.com">andreasc89@gmail.com</a>)</p>';
+/**
+ * Add static entries for use in the template file. 
+ */
+$lt->data['header'] = 'Latte';
+$lt->data['slogan'] = 'A PHP-based MVC-inspired CMF';
+$lt->data['favicon']      = theme_url('logo_80x80.png');
+$lt->data['logo']         = theme_url('logo_80x80.png');
+$lt->data['logo_width']   = 80;
+$lt->data['logo_height']  = 80;
+$lt->data['footer'] = '<p>Latte &copy; by Andreas Carlsson (andreasc89@gmail.com)</p>';

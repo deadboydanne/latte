@@ -4,7 +4,7 @@
 *
 * @package LatteCore
 */
-
+session_start();
 /**
 * Enable auto-load of class declarations.
 */

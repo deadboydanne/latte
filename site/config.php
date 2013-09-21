@@ -63,6 +63,7 @@ $lt->config['language'] = 'en';
 $lt->config['controllers'] = array(
   'index'     => array('enabled' => true,'class' => 'CCIndex'),
   'developer' => array('enabled' => true,'class' => 'CCDeveloper'),
+  'guestbook' => array('enabled' => true,'class' => 'CCGuestbook'),
 );
 
 /**
