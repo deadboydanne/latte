@@ -44,3 +44,10 @@ function theme_url($url) {
 function current_url() {
   return CLatte::Instance()->request->current_url;
 }
+
+/**
+* Render all views.
+*/
+function render_views() {
+  return CLatte::Instance()->views->Render();
+}

@@ -40,28 +40,12 @@ class CCGuestbook extends CObject implements IController, IHasSQL {
   /**
    * Implementing interface IController. All controllers must have an index action.
    */
-  public function Index() {	
-    $formAction = $this->request->CreateUrl('guestbook/handler');
-    $this->pageForm = "
-      <form action='{$formAction}' method='post'>
-        <p>
-          <label>Message: <br/>
-          <textarea name='newEntry'></textarea></label>
-        </p>
-        <p>
-          <input type='submit' name='doAdd' value='Add message' />
-          <input type='submit' name='doClear' value='Clear all messages' />
-          <input type='submit' name='doCreate' value='Create database table' />
-        </p>
-      </form>
-    ";
-    $this->data['title'] = $this->pageTitle;
-    $this->data['main']  = $this->pageHeader . $this->pageForm . $this->pageMessages;
-    
-    $entries = $this->ReadAllFromDatabase();
-    foreach($entries as $val) {
-      $this->data['main'] .= "<div style='background-color:#f6f6f6;border:1px solid #ccc;margin-bottom:1em;padding:1em;'><p>At: {$val['created']}</p><p>" . htmlent($val['entry']) . "</p></div>\n";
-    }
+  public function Index() {
+    $this->views->SetTitle($this->pageTitle);
+    $this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
+      'entries'=>$this->ReadAllFromDatabase(), 
+      'formAction'=>$this->request->CreateUrl('guestbook/handler')
+    ));
   }
 
   /**

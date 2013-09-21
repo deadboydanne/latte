@@ -9,6 +9,14 @@ class CLatte implements ISingleton {
   private static $instance = null;
 
   /**
+   * Members
+   */
+  public $config = null;
+  public $request = null;
+  public $data = null;
+  public $db = null;
+
+  /**
    * Constructor
    */
   protected function __construct() {
@@ -20,6 +28,8 @@ class CLatte implements ISingleton {
       if(isset($this->config['database'][0]['dsn'])) {
         $this->db = new CMDatabase($this->config['database'][0]['dsn']);
      }
+	 // Create a container for all views and theme data
+     $this->views = new CViewContainer();
   }
   
   
@@ -100,8 +110,9 @@ class CLatte implements ISingleton {
       include $functionsPath;
     }
 
-    // Extract $lt->data to own variables and handover to the template file
+    // Extract $lt->data and $lt->view->data to own variables and handover to the template file
     extract($this->data);      
+    extract($this->views->GetData());      
     include("{$themePath}/default.tpl.php");
   }
 
