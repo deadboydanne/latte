@@ -1,17 +1,19 @@
 /** 
- * Description: Core theme for Lydia
+ * Description: Core theme for Latte
  */
+
+@import url(../normalize.css);
 
 /**
  * Structure
  */
-html{background-color:#eee;}
-body{margin:0;padding:0;color:#333;background-color:#fff;
+html{background-color:#e3d2b4;}
+body{margin:0;padding:0;color:#140b04;background-color:#fefefe;
   font: 1em Verdana, Arial, Helvetica, sans-serif;}
 
 #wrap-header {}
 #wrap-main {}
-#wrap-footer {border-top:1px solid #ccc;background-color:#eee;}
+#wrap-footer {border-top:1px solid #e3d2b4;background-color:#e3d2b4;}
 
 #header,
 #main,
@@ -20,9 +22,9 @@ body{margin:0;padding:0;color:#333;background-color:#fff;
 #footer {margin-bottom:16px;}
 
 #header,
-#main {background-color:#fff;}
+#main {background-color:#fefefe;}
 #main {min-height:300px;}
-#footer {font-size:0.80em;color:#666;background-color:#eee;}
+#footer {font-size:0.80em;color:#332313;background-color:#e3d2b4;}
 
 
 /**
@@ -36,8 +38,8 @@ body{margin:0;padding:0;color:#333;background-color:#fff;
 
 .site-logo {}
 .site-title,
-.site-slogan {font-family:monospace;line-height:0;padding-left:20px;color:#333;
-  text-shadow:#ccc 2px -2px 2px;}
+.site-slogan {font-family:Arial;line-height:0;padding-left:0px;padding-top:20px;color:#140b04;}
+.site-slogan {padding-left:20px;padding-top:48px;}
 .site-title  {font-size:4em;font-weight:bold;}
 .site-slogan {font-size:1.5em;}
 
@@ -56,8 +58,8 @@ a:active  {}
 /**
  * Headings
  */
-h1{border-bottom:3px double #ccc;padding-bottom:4px;}
-h2{border-bottom:1px solid #ccc;padding-bottom:4px;}
+h1{border-bottom:3px double #332313;padding-bottom:4px;}
+h2{border-bottom:1px solid #332313;padding-bottom:4px;}
 
 
 /**

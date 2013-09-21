@@ -23,7 +23,7 @@ $lt->config['url_type'] = 1;
 /**
  * Set what to show as debug or developer information in the get_debug() theme helper.
  */
-$lt->config['debug']['display-latte'] = true;
+$lt->config['debug']['display-latte'] = false;
 
 /**
  * Set a base_url to use another than the default calculated
@@ -73,3 +73,8 @@ $lt->config['theme'] = array(
   // The name of the theme in the theme directory
   'name'    => 'core', 
 );
+
+/**
+* Set database(s).
+*/
+$lt->config['database'][0]['dsn'] = 'sqlite:' . LATTE_SITE_PATH . '/data/.ht.sqlite';
