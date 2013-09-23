@@ -46,6 +46,5 @@ class CCGuestbook extends CObject implements IController {
     }            
     $this->RedirectTo($this->request->CreateUrl($this->request->controller));
   }
-  
 
 }

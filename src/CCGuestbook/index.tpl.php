@@ -5,6 +5,7 @@
   <p>
     <label>Message: <br/>
     <textarea name='newEntry'></textarea></label>
+	<div class="secret"><input type="text" name="email" id="email" /></div>
   </p>
   <p>
     <input type='submit' name='doAdd' value='Add message' />
