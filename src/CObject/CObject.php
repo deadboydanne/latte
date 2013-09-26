@@ -6,24 +6,31 @@
 */
 class CObject {
 
-   public $config;
-   public $request;
-   public $data;
-   public $db;
-   public $views;
-   public $session;
+	/**
+	 *
+	 */
+   protected $config;
+   protected $request;
+   protected $data;
+   protected $db;
+   protected $views;
+   protected $session;
+   protected $user;
 
   /**
   * Constructor
   */
-   protected function __construct() {
-    $lt = CLatte::Instance();
+   protected function __construct($lt=null) {
+	if(!$lt) {
+    	$lt = CLatte::Instance();
+	}
     $this->config   = &$lt->config;
     $this->request  = &$lt->request;
     $this->data     = &$lt->data;
 	$this->db		= &$lt->db;
     $this->views    = &$lt->views;
 	$this->session  = &$lt->session;
+	$this->user		= &$lt->user;
   }
 
   /**
