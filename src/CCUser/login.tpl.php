@@ -1,4 +1,6 @@
 <h1>Login</h1>
+<p>Login using your username or email.</p>
+<?=$login_form?>
 <p>Here should a login form be, but for now you can login using these links.</p>
 <ul>
   <li><a href='<?=create_url('user/login/doe/doe')?>'>Login as doe:doe (should work)</a>
