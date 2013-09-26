@@ -43,6 +43,13 @@ body{margin:0;padding:0;color:#140b04;background-color:#fefefe;
 .site-title  {font-size:4em;font-weight:bold;}
 .site-slogan {font-size:1.5em;}
 
+/**
+ * Banner
+ */
+#login-menu {
+text-align: right;
+}
+
 
 /**
  * Links

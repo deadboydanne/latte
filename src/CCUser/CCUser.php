@@ -14,7 +14,6 @@ class CCUser extends CObject implements IController {
    */
   public function __construct() {
     parent::__construct();
-    $this->userModel = new CMUser();
   }
 
 
@@ -22,10 +21,22 @@ class CCUser extends CObject implements IController {
    * Show profile information of the user.
    */
   public function Index() {
-    $this->views->SetTitle('User Profile');
+    $this->views->SetTitle('User Controller');
     $this->views->AddInclude(__DIR__ . '/index.tpl.php', array(
-      'is_authenticated'=>$this->userModel->IsAuthenticated(), 
-      'user'=>$this->userModel->GetUserProfile(),
+      'is_authenticated'=>$this->user->IsAuthenticated(), 
+      'user'=>$this->user->GetProfile(),
+    ));
+  }
+  
+
+  /**
+   * View and edit user profile.
+   */
+  public function Profile() {
+    $this->views->SetTitle('User Profile');
+    $this->views->AddInclude(__DIR__ . '/profile.tpl.php', array(
+      'is_authenticated'=>$this->user->IsAuthenticated(), 
+      'user'=>$this->user->GetProfile(),
     ));
   }
   
@@ -33,9 +44,13 @@ class CCUser extends CObject implements IController {
   /**
    * Authenticate and login a user.
    */
-  public function Login($akronymOrEmail=null, $password=null) {
-    $this->userModel->Login($akronymOrEmail, $password);
-    $this->RedirectToController();
+  public function Login($usernameOrEmail=null, $password=null) {
+    if($usernameOrEmail && $password) {
+      $this->user->Login($usernameOrEmail, $password);
+      $this->RedirectToController('profile');
+    }
+    $this->views->SetTitle('Login');
+    $this->views->AddInclude(__DIR__ . '/login.tpl.php');
   }
   
 
@@ -43,7 +58,7 @@ class CCUser extends CObject implements IController {
    * Logout a user.
    */
   public function Logout() {
-    $this->userModel->Logout();
+    $this->user->Logout();
     $this->RedirectToController();
   }
   
@@ -52,7 +67,7 @@ class CCUser extends CObject implements IController {
    * Init the user database.
    */
   public function Init() {
-    $this->userModel->Init();
+    $this->user->Init();
     $this->RedirectToController();
   }
   

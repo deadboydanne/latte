@@ -104,3 +104,20 @@ function current_url() {
 function render_views() {
   return CLatte::Instance()->views->Render();
 }
+
+/**
+* Login menu. Creates a menu which reflects if user is logged in or not.
+*/
+function login_menu() {
+  $lt = CLatte::Instance();
+  if($lt->user->IsAuthenticated()) {
+    $items = "<a href='" . create_url('user/profile') . "'>" . $lt->user->GetUsername() . "</a> ";
+    if($lt->user->IsAdministrator()) {
+      $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
+    }
+    $items .= "<a href='" . create_url('user/logout') . "'>logout</a> ";
+  } else {
+    $items = "<a href='" . create_url('user/login') . "'>login</a> ";
+  }
+  return "<nav>$items</nav>";
+}
