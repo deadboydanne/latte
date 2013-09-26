@@ -22,8 +22,8 @@ class CMGuestbook extends CObject implements IHasSQL {
    */
   public static function SQL($key=null) {
     $queries = array(
-      'create table guestbook'  => "CREATE TABLE IF NOT EXISTS Guestbook (id INTEGER PRIMARY KEY, entry TEXT, created DATETIME default (datetime('now')));",
-      'insert into guestbook'   => 'INSERT INTO Guestbook (entry) VALUES (?);',
+      'create table guestbook'  => "CREATE TABLE IF NOT EXISTS Guestbook (id INTEGER PRIMARY KEY, entry TEXT, created DATETIME);",
+      'insert into guestbook'   => 'INSERT INTO Guestbook (entry,created) VALUES (?,?);',
       'select * from guestbook' => 'SELECT * FROM Guestbook ORDER BY id DESC;',
       'delete from guestbook'   => 'DELETE FROM Guestbook;',
      );
@@ -42,7 +42,7 @@ class CMGuestbook extends CObject implements IHasSQL {
       $this->db->ExecuteQuery(self::SQL('create table guestbook'));
       $this->session->AddMessage('notice', 'Successfully created the database tables (or left them untouched if they already existed).');
     } catch(Exception$e) {
-      die("$e<br/>Failed to open database: " . $this->config['database'][0]['dsn']);
+      die("$e<br/>Failed to open database: " . $this->config['database'][$this->config['database']['type']]['dsn']);
     }
   }
   
@@ -51,7 +51,7 @@ class CMGuestbook extends CObject implements IHasSQL {
    * Add a new entry to the guestbook and save to database.
    */
   public function Add($entry) {
-    $this->db->ExecuteQuery(self::SQL('insert into guestbook'), array($entry));
+    $this->db->ExecuteQuery(self::SQL('insert into guestbook'), array($entry,date('Y-m-d H:i:s')));
     $this->session->AddMessage('success', 'Successfully inserted new message.');
     if($this->db->rowCount() != 1) {
       die('Failed to insert new guestbook item into database.');

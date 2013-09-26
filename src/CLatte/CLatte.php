@@ -40,9 +40,9 @@ class CLatte implements ISingleton {
 		date_default_timezone_set($this->config['timezone']);
 
 		// Create a database object.
-		if(isset($this->config['database'][0]['dsn'])) {
-  		$this->db = new CMDatabase($this->config['database'][0]['dsn']);
-  	}
+		
+	  	$this->db = new CMDatabase($this->config['database'][$this->config['database']['type']]['dsn'],$this->config['database'][$this->config['database']['type']]['user'],$this->config['database'][$this->config['database']['type']]['pass']);
+  	
   	
   	// Create a container for all views and theme data
   	$this->views = new CViewContainer();

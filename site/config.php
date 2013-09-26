@@ -24,7 +24,7 @@ $lt->config['url_type'] = 1;
 /**
  * Set what to show as debug or developer information in the get_debug() theme helper.
  */
-$lt->config['debug']['latte'] = true;
+$lt->config['debug']['latte'] = false;
 $lt->config['debug']['db-num-queries'] = true;
 $lt->config['debug']['db-queries'] = true;
 $lt->config['debug']['timer'] = true;
@@ -69,6 +69,7 @@ $lt->config['controllers'] = array(
   'index'     => array('enabled' => true,'class' => 'CCIndex'),
   'developer' => array('enabled' => true,'class' => 'CCDeveloper'),
   'guestbook' => array('enabled' => true,'class' => 'CCGuestbook'),
+  'user' => array('enabled' => true,'class' => 'CCUser'),
 );
 
 /**
@@ -80,7 +81,22 @@ $lt->config['theme'] = array(
 );
 
 /**
-* Set database(s).
+* Set database(s). Choose SQLITE or MySQL
 */
-$lt->config['database'][0]['dsn'] = 'sqlite:' . LATTE_SITE_PATH . '/data/.ht.sqlite';
+
+$lt->config['database']['type'] = 'mysql';
+
+$lt->config['database']['sqlite']['dsn'] = 'sqlite:' . LATTE_SITE_PATH . '/data/.ht.sqlite';
+$lt->config['database']['sqlite']['user'] = null;
+$lt->config['database']['sqlite']['pass'] = null;
+
+$lt->config['database']['mysql']['dsn'] = 'mysql:host=localhost;dbname=latte_db1';
+$lt->config['database']['mysql']['user'] = 'root';
+$lt->config['database']['mysql']['pass'] = 'root';
+
+/*
+$lt->config['database']['mysql']['dsn'] = 'mysql:host=blu-ray.student.bth.se;dbname=anca13';
+$lt->config['database']['mysql']['user'] = 'anca13';
+$lt->config['database']['mysql']['pass'] = 'fo{(,Sq8';
+*/
 
