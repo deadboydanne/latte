@@ -46,9 +46,13 @@ body{margin:0;padding:0;color:#140b04;background-color:#fefefe;
 /**
  * Banner
  */
-#login-menu {
-text-align: right;
-}
+/**
+ * Login menu
+ */
+#login-menu{float:right;font-size:smaller;}
+#login-menu img.gravatar{vertical-align:middle;padding-right:3px;}
+#login-menu a{text-decoration:none;}
+#login-menu a:hover{text-decoration:underline;}
 
 
 /**

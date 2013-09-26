@@ -67,7 +67,7 @@ function get_messages_from_session() {
 function login_menu() {
   $lt = CLatte::Instance();
   if($lt->user['isAuthenticated']) {
-    $items = "<a href='" . create_url('user/profile') . "'>" . $lt->user['username'] . "</a> ";
+    $items = "<a href='" . create_url('user/profile') . "'><img class='gravatar' src='" . get_gravatar(20) . "' alt='' />" . $lt->user['username'] . "</a> ";
     if($lt->user['hasRoleAdministrator']) {
       $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
     }
@@ -120,4 +120,11 @@ function current_url() {
  */
 function render_views() {
   return CLatte::Instance()->views->Render();
+}
+
+/**
+* Get a gravatar based on the user's email.
+*/
+function get_gravatar($size=null) {
+  return 'http://www.gravatar.com/avatar/' . md5(strtolower(trim(CLatte::Instance()->user['email']))) . '.jpg?' . ($size ? "s=$size" : null);
 }
