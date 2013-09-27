@@ -110,3 +110,11 @@ $lt->config['database']['sqlite']['user'] = null;
 $lt->config['database']['sqlite']['pass'] = null;
  */
 
+
+/**
+* How to hash password of new users, choose from: plain, md5salt, md5, sha1salt, sha1.
+*/
+$lt->config['hashing_algorithm'] = 'sha1salt';
+
+
+
