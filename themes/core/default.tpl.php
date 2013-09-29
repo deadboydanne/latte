@@ -7,11 +7,13 @@
   <link rel='stylesheet' href='<?=$stylesheet?>'/>
 </head>
 <body>
-  <div id='wrap-header'>
-    <div id='header'>
+	<div id="above">
       <div id='login-menu'>
         <?=login_menu()?>
       </div>
+	</div>
+  <div id='wrap-header'>
+    <div id='header'>
     <div id='banner'>
       <a href='<?=base_url()?>'>
         <img class='site-logo' src='<?=$logo?>' alt='logo' width='<?=$logo_width?>' height='<?=$logo_height?>' />

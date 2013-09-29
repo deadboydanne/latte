@@ -30,7 +30,7 @@ body{margin:0;padding:0;color:#140b04;background-color:#fefefe;
 /**
  * Banner
  */
-#banner {display:table;margin-bottom:10px;}
+#banner {display:table;margin-bottom:10px;margin-top:30px;}
 
 .site-logo,
 .site-title,
@@ -49,9 +49,10 @@ body{margin:0;padding:0;color:#140b04;background-color:#fefefe;
 /**
  * Login menu
  */
-#login-menu{float:right;font-size:smaller;}
+#above{background:#332313;position:fixed;width:100%;height:30px;}
+#login-menu{width:900px;position:absolut;float:top;font-size:smaller;text-align:right;margin:5px auto 0 auto}
 #login-menu img.gravatar{vertical-align:middle;padding-right:3px;}
-#login-menu a{text-decoration:none;}
+#login-menu a{text-decoration:none;color:#fff;}
 #login-menu a:hover{text-decoration:underline;}
 
 
@@ -87,7 +88,7 @@ padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
 .success a         { color: #264409; }
 .info a {}
 
-.validation-failed{border:2px solid red;}
+.validation-failed{border:2px solid #b00;}
 .validation-message{color:red;font-size:smaller;}
 
 

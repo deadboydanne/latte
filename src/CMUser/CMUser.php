@@ -67,7 +67,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
 	  $password = $this->CreatePassword('root');
       $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s')));
       $idRootUser = $this->db->LastInsertId();
-	  $password = $this->CreatePassword('root');
+	  $password = $this->CreatePassword('doe');
       $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s')));
       $idDoeUser = $this->db->LastInsertId();
       $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'The Administrator Group', date('Y-m-d H:i:s')));
@@ -85,6 +85,24 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
   }
   
 
+  /**
+   * Create new user.
+   *
+   * @param $username string the username.
+   * @param $password string the password plain text to use as base. 
+   * @param $name string the user full name.
+   * @param $email string the user email.
+   * @returns boolean true if user was created or else false and sets failure message in session.
+   */
+  public function Create($username, $password, $name, $email) {
+    $pwd = $this->CreatePassword($password);
+    $this->db->ExecuteQuery(self::SQL('insert into user'), array($username, $name, $email, $pwd['algorithm'], $pwd['salt'], $pwd['password'], date('Y-m-d H:i:s')));
+    if($this->db->RowCount() == 0) {
+      $this->AddMessage('error', "Failed to create user.");
+      return false;
+    }
+    return true;
+  }
 
   /**
    * Login by autenticate the user and password. Store user information in session if success.

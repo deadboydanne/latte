@@ -21,7 +21,7 @@ class CFormUserProfile extends CForm {
 
          
     $this->SetValidation('name', array('not_empty'))
-         ->SetValidation('email', array('not_empty','email_adress'));
+         ->SetValidation('email', array('not_empty'));
   }
   
 }

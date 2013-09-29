@@ -22,7 +22,7 @@ class CMGuestbook extends CObject implements IHasSQL {
    */
   public static function SQL($key=null) {
     $queries = array(
-      'create table guestbook'  => "CREATE TABLE IF NOT EXISTS Guestbook (id INTEGER PRIMARY KEY, entry TEXT, created DATETIME);",
+      'create table guestbook'  => "CREATE TABLE IF NOT EXISTS Guestbook (id INTEGER PRIMARY KEY AUTO_INCREMENT, entry TEXT, created DATETIME);",
       'insert into guestbook'   => 'INSERT INTO Guestbook (entry,created) VALUES (?,?);',
       'select * from guestbook' => 'SELECT * FROM Guestbook ORDER BY id DESC;',
       'delete from guestbook'   => 'DELETE FROM Guestbook;',

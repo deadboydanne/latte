@@ -69,11 +69,11 @@ function login_menu() {
   if($lt->user['isAuthenticated']) {
     $items = "<a href='" . create_url('user/profile') . "'><img class='gravatar' src='" . get_gravatar(20) . "' alt='' />" . $lt->user['username'] . "</a> ";
     if($lt->user['hasRoleAdministrator']) {
-      $items .= "<a href='" . create_url('acp') . "'>acp</a> ";
+      $items .= "<a href='" . create_url('acp') . "'>Admin-panel</a> ";
     }
-    $items .= "<a href='" . create_url('user/logout') . "'>logout</a> ";
+    $items .= "<a href='" . create_url('user/logout') . "'>Log out</a> ";
   } else {
-    $items = "<a href='" . create_url('user/login') . "'>login</a> ";
+    $items = "<a href='" . create_url('user/login') . "'>Login</a> ";
   }
   return "<nav>$items</nav>";
 }

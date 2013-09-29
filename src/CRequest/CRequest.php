@@ -27,7 +27,7 @@ class CRequest {
 	}
 
 
-	/**
+/**
 	 * Create a url in the way it should be created.
 	 *
 	 * @param $url string the relative url or the controller
