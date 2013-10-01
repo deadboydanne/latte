@@ -34,3 +34,20 @@ function exception_handler($exception) {
   echo "Latte: Uncaught exception: <p>" . $exception->getMessage() . "</p><pre>" . $exception->getTraceAsString(), "</pre>";
 }
 set_exception_handler('exception_handler');
+
+
+/**
+* Make clickable links from URLs in text.
+*
+* @param string $text the text that should be formatted.
+*/
+function make_clickable($text) {
+  return preg_replace_callback(
+    '#\b(?<![href|src]=[\'"])https?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#',
+    create_function(
+      '$matches',
+      'return "<a href=\'{$matches[0]}\'>{$matches[0]}</a>";'
+    ),
+    $text
+  );
+}
