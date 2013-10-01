@@ -69,6 +69,7 @@ $lt->config['controllers'] = array(
   'index'     => array('enabled' => true,'class' => 'CCIndex'),
   'developer' => array('enabled' => true,'class' => 'CCDeveloper'),
   'guestbook' => array('enabled' => true,'class' => 'CCGuestbook'),
+  'content' => array('enabled' => true,'class' => 'CCContent'),
   'user' => array('enabled' => true,'class' => 'CCUser'),
   'acp' => array('enabled' => true,'class' => 'CCAdminControlPanel'),
 );
@@ -88,7 +89,7 @@ $lt->config['theme'] = array(
 $lt->config['database']['type'] = 'mysql';
 
 // Database local
-if($_SERVER['REMOTE_ADDR'] == '::1') {
+if($_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
 $lt->config['database']['mysql']['dsn'] = 'mysql:host=localhost;dbname=latte_db1';
 $lt->config['database']['mysql']['user'] = 'root';
 $lt->config['database']['mysql']['pass'] = 'root';
@@ -98,8 +99,6 @@ $lt->config['database']['mysql']['dsn'] = 'mysql:host=blu-ray.student.bth.se;dbn
 $lt->config['database']['mysql']['user'] = 'anca13';
 $lt->config['database']['mysql']['pass'] = 'fo{(,Sq8';
 }
-
-
 
 
 /**
