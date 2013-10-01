@@ -91,10 +91,23 @@ padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
 .validation-failed{border:2px solid #b00;}
 .validation-message{color:red;font-size:smaller;}
 
+/**
+ * Forms
+ */
+input,textarea{font:inherit;}
+input[readonly]{color:#666;}
+label{font-size:smaller;}
+.validation-failed{border:2px solid red;}
+.validation-message{color:red;font-size:smaller;}
+.form-action-link{font-size:smaller;}
+
+.content-edit input[type=text]{width:35em;}
+.content-edit textarea{width:35em;height:15em;}
+
 
 /**
  * Misc
 */
-.secret {
-	display: none;
-}
+.secret {display:none;}
+.smaller-text{font-size:smaller;}
+.silent{color:#999;}

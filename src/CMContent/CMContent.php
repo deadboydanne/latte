@@ -40,12 +40,15 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
    * @param string $key the string that is the key of the wanted SQL-entry in the array.
    */
   public static function SQL($key=null) {
+    $order_order  = isset($args['order-order']) ? $args['order-order'] : 'ASC';
+    $order_by     = isset($args['order-by'])    ? $args['order-by'] : 'id';  
     $queries = array(
       'drop table content'      => "DROP TABLE IF EXISTS Content;",
       'create table content'    => "CREATE TABLE IF NOT EXISTS Content(id INT(11) PRIMARY KEY AUTO_INCREMENT, linktext VARCHAR(100), type VARCHAR(20), title VARCHAR(100), data TEXT, idUser INT(11), created DATETIME, updated DATETIME, deleted DATETIME, FOREIGN KEY(idUser) REFERENCES User(id));",
       'insert content'          => 'INSERT INTO Content (linktext,type,title,data,idUser,created) VALUES (?,?,?,?,?,?);',
       'select * by id'          => 'SELECT c.*, u.username as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.id=?;',
       'select * by key'         => 'SELECT c.*, u.username as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.linktext=?;',
+      'select * by type'        => 'SELECT c.*, u.username as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE type=? ORDER BY '.$order_by.' '.$order_order.';',
       'select *'                => 'SELECT c.*, u.username as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id;',
       'update content'          => "UPDATE Content SET linktext=?, type=?, title=?, data=?, updated=? WHERE id=?;",
      );
@@ -88,9 +91,9 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
     }
     $rowcount = $this->db->RowCount();
     if($rowcount) {
-      $this->AddMessage('success', "Successfully {$msg} content '{$this['key']}'.");
+      $this->AddMessage('success', "Successfully {$msg} content '" . htmlEnt($this['key']) . "'.");
     } else {
-      $this->AddMessage('error', "Failed to {$msg} content '{$this['key']}'.");
+      $this->AddMessage('error', "Failed to {$msg} content '" . htmlEnt($this['key']) . "'.");
     }
     return $rowcount === 1;
   }
@@ -117,12 +120,18 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
   /**
    * List all content.
    *
+   * @param $args array with various settings for the request. Default is null.
    * @returns array with listing or null if empty.
    */
-  public function ListAll() {
+  public function ListAll($args=null) {    
     try {
-      return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select *'));
-    } catch(Exception$e) {
+      if(isset($args) && isset($args['type'])) {
+        return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * by type', $args), array($args['type']));
+      } else {
+        return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select *', $args));
+      }
+    } catch(Exception $e) {
+      echo $e;
       return null;
     }
   }

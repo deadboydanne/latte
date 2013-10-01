@@ -128,3 +128,22 @@ function render_views() {
 function get_gravatar($size=null) {
   return 'http://www.gravatar.com/avatar/' . md5(strtolower(trim(CLatte::Instance()->user['email']))) . '.jpg?' . ($size ? "s=$size" : null);
 }
+
+
+/**
+ * Escape data to make it safe to write in the browser.
+ */
+function esc($str) {
+  return htmlEnt($str);
+}
+
+
+/**
+ * Display diff of time between now and a datetime. 
+ *
+ * @param $start datetime|string
+ * @returns string
+ */
+function time_diff($start) {
+  return formatDateTimeDiff($start);
+}

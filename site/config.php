@@ -70,6 +70,8 @@ $lt->config['controllers'] = array(
   'developer' => array('enabled' => true,'class' => 'CCDeveloper'),
   'guestbook' => array('enabled' => true,'class' => 'CCGuestbook'),
   'content' => array('enabled' => true,'class' => 'CCContent'),
+  'page' => array('enabled' => true,'class' => 'CCPage'),
+  'blog' => array('enabled' => true,'class' => 'CCBlog'),
   'user' => array('enabled' => true,'class' => 'CCUser'),
   'acp' => array('enabled' => true,'class' => 'CCAdminControlPanel'),
 );
