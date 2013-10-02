@@ -71,6 +71,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
     switch($filter) {
       /* case 'php': $data = nl2br(make_clickable(eval('?>'.$data))); break;
       case 'html': $data = nl2br(make_clickable($data)); break; */ // Commented out for security reasons
+      case 'htmlpurify': $data = nl2br(CHTMLPurifier::Purify($data)); break;
       case 'bbcode': $data = nl2br(bbcode2html(htmlEnt($data))); break;
       case 'plain': 
       default: $data = nl2br(make_clickable(htmlEnt($data))); break;
@@ -100,7 +101,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
       $this->db->ExecuteQuery(self::SQL('insert content'), array('plain','hello-world-again', 'post', 'Hello World Again', 'This is also a demo post but it is completely different from the last one.', $this->user['id'], date('Y-m-d H:i:s')));
       $this->db->ExecuteQuery(self::SQL('insert content'), array('plain','yet-another-post', 'post', 'Yet another post', 'This is my third demo post. Seems like my blog is starting to become quite popular now.', $this->user['id'], date('Y-m-d H:i:s')));
       $this->db->ExecuteQuery(self::SQL('insert content'), array('plain','about', 'page', 'About', 'This page is about me and my friends', $this->user['id'], date('Y-m-d H:i:s')));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('plain','pink-floyd', 'page', 'Pink Floyd', 'A website is not complete until it has some serious information about Pink Floyd, the greatest band in history.', $this->user['id'], date('Y-m-d H:i:s')));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('bbcode','pink-floyd', 'page', 'Pink Floyd', 'A website is [b]not[/b] complete until it has some serious information about Pink Floyd, the greatest band in history. Read more about [b]Pink Floyd[/b] on [url=http://en.wikipedia.org/wiki/Pink_Floyd]Wikipedia[/url]', $this->user['id'], date('Y-m-d H:i:s')));
       $this->AddMessage('success', 'Successfully created the database tables and created a default "Hello World" blog post, owned by you.');
     } catch(Exception$e) {
       die("$e<br/>Failed to open database: " . $this->config['database'][$this->config['database']['type']]['dsn']);
