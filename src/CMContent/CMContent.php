@@ -10,6 +10,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
    * Properties
    */
   public $data;
+  
 
 
   /**
@@ -46,7 +47,7 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
     $order_by     = isset($args['order-by'])    ? $args['order-by'] : 'id';  
     $queries = array(
       'drop table content'      => "DROP TABLE IF EXISTS Content;",
-      'create table content'    => "CREATE TABLE IF NOT EXISTS Content(id INT(11) PRIMARY KEY AUTO_INCREMENT, filter VARCHAR(10), linktext VARCHAR(100), type VARCHAR(20), title VARCHAR(100), data TEXT, idUser INT(11), created DATETIME, updated DATETIME, deleted DATETIME, FOREIGN KEY(idUser) REFERENCES User(id));",
+      'create table content'    => "CREATE TABLE IF NOT EXISTS Content(id INT(11) PRIMARY KEY AUTO_INCREMENT, filter VARCHAR(20), linktext VARCHAR(100), type VARCHAR(20), title VARCHAR(100), data TEXT, idUser INT(11), created DATETIME, updated DATETIME, deleted DATETIME, FOREIGN KEY(idUser) REFERENCES User(id));",
       'insert content'          => 'INSERT INTO Content (filter,linktext,type,title,data,idUser,created) VALUES (?,?,?,?,?,?,?);',
       'select * by id'          => 'SELECT c.*, u.username as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.id=?;',
       'select * by key'         => 'SELECT c.*, u.username as owner FROM Content AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.linktext=?;',
@@ -68,18 +69,15 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
    * @returns string with the filtered data.
    */
   public static function Filter($data, $filter) {
-    switch($filter) {
-      /* case 'php': $data = nl2br(make_clickable(eval('?>'.$data))); break;
-      case 'html': $data = nl2br(make_clickable($data)); break; */ // Commented out for security reasons
-      case 'htmlpurify': $data = nl2br(CHTMLPurifier::Purify($data)); break;
-      case 'bbcode': $data = nl2br(bbcode2html(htmlEnt($data))); break;
-      case 'plain': 
-      default: $data = nl2br(make_clickable(htmlEnt($data))); break;
-    }
+	$accepted_filters = array('htmlpurify','bbcode','plain','make_clickable','markdown','markdownextra','smartypants','typographer');
+	if(in_array($filter,$accepted_filters)) {
+		$data = CTextFilter::filter($data,$filter);
+	} else {
+		$data = CTextFilter::filter($data,"plain");
+	}
     return $data;
   }
-  
-  
+
   /**
    * Get the filtered content.
    *
@@ -97,12 +95,17 @@ class CMContent extends CObject implements IHasSQL, ArrayAccess {
     try {
       $this->db->ExecuteQuery(self::SQL('drop table content'));
       $this->db->ExecuteQuery(self::SQL('create table content'));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('plain','hello-world', 'post', 'Hello World', 'This is a demo post.', $this->user['id'], date('Y-m-d H:i:s')));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('plain','hello-world-again', 'post', 'Hello World Again', 'This is also a demo post but it is completely different from the last one.', $this->user['id'], date('Y-m-d H:i:s')));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('plain','yet-another-post', 'post', 'Yet another post', 'This is my third demo post. Seems like my blog is starting to become quite popular now.', $this->user['id'], date('Y-m-d H:i:s')));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('plain','about', 'page', 'About', 'This page is about me and my friends', $this->user['id'], date('Y-m-d H:i:s')));
-      $this->db->ExecuteQuery(self::SQL('insert content'), array('bbcode','pink-floyd', 'page', 'Pink Floyd', 'A website is [b]not[/b] complete until it has some serious information about Pink Floyd, the greatest band in history. Read more about [b]Pink Floyd[/b] on [url=http://en.wikipedia.org/wiki/Pink_Floyd]Wikipedia[/url]', $this->user['id'], date('Y-m-d H:i:s')));
-      $this->AddMessage('success', 'Successfully created the database tables and created a default "Hello World" blog post, owned by you.');
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('plain','om-ramverket', 'page', 'Om ramverket', 'Här står det lite roliga saker om mitt ramverk Latte. Den här texten är filtrerad med filtret plain. Inga <b>html</b>-taggar eller [b]BB-code[/b]-taggar är tillåtna. Däremot formateras länkar automatiskt så att det blir klickbara. Till exempel http://www.dbwebb.se', $this->user['id'], date('Y-m-d H:i:s')));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('htmlpurify','kontakt', 'page', 'Kontakt', 'Detta skulle kunna vara en kontaktsida. Den här texten är filtrerad med HTML-purify som godkänner vissa html taggar. Till exempel <b>fetstil</b>, <i>kursiv,</i> och <u>understruken</u> text. Däremot filtreras <javascript>javascript</javascript> bort', $this->user['id'], date('Y-m-d H:i:s')));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('plain','filter-plain', 'post', 'Filter: Plain', 'Den här texten filtreras med plain som inte tillåter <b>html-taggar</b> eller [b]bb-code[/b]-taggar. Däremot körs metoden make_clickable() som gör länkar klickbara. Till exempel http://www.dbwebb.se', $this->user['id'], date('Y-m-d H:i:s')));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('htmlpurify','filter-htmlpurify', 'post', 'Filter: HTML Purify', 'Den här texten är körd genom filtret htmlpurify som <b>tillåter vissa</b> <i>HTML</i>-länkar. Däremot inte någon [b]bb-code[/b] eller <?php ?> php-kod.', $this->user['id'], date('Y-m-d H:i:s')));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array('make_clickable','filter-make-clickable', 'post', 'Filter: Make clickable', 'Om man bara använder filtret make_clickable så tillåts ingen html-kod eller bb-kod. Däremot görs länkar som till exempel http://www.dbwebb.se automatiskt klickbara. Skillnaden mot filtret plain är att inga radbrytningar görs när man använder make_clickable.', $this->user['id'], date('Y-m-d H:i:s')));
+	  $this->db->ExecuteQuery(self::SQL('insert content'), array('bbcode','filter-bbcode', 'post', 'Filter: BB Code', 'Med filtret BB code kan man använda [b]BB-code[/b] syntaxen för att [i]formatera[/i] texten. Radbrytningar läggs in automatiskt, däremot körs inte make_clickable så http://www.dbwebb.se kommer bara att skrivas ut som text. För att få en länk använder man BB-code syntaxen URL: [url]http://www.dbwebb.se[/url].', $this->user['id'], date('Y-m-d H:i:s')));
+	  $this->db->ExecuteQuery(self::SQL('insert content'), array('markdown','filter-markdown', 'post', 'Filter: Markdown', "Markdown är ett sätt att formatera text på som gör att man kan skriva text som är läsbar oavsett om den är **formaterad** eller om man läser den *oformaterad*. Man kan till exempel göra\n###Rubriker\n och\n\n1. Listor\n2. som är\n3. numrerade\n\n* Eller\n* Onumrerade.", $this->user['id'], date('Y-m-d H:i:s')));
+	  $this->db->ExecuteQuery(self::SQL('insert content'), array('markdownextra','filter-markdown-extra', 'post', 'Filter: Markdown Extra', "Med Markdown Extra kan man **förutom** gör ännu lite mer saker. Till exempel\n###Tabeller\n\n| Klockan  | Måltid        |\n|----------|:--------------|\n| Kl. 6    | Vakna!        |\n| Kl. 7    | Äta frukost   |\n| Kl. 12   | Äta lunch     |\n| Kl. 18   | Äta middag    |\n| Kl. 21   | Äta kvällsmat |\n\n", $this->user['id'], date('Y-m-d H:i:s')));
+	  $this->db->ExecuteQuery(self::SQL('insert content'), array('smartypants','filter-smartypants', 'post', 'Filter: Smartypants', 'Smartypants är ett filter som snyggar till typografin. Till exempel blir "citat" mycket snyggare och man kan göra --Tankestreck. Till skillnad från Typographer lägger Smartypants in till hårda mellanslag vid långa tal, till exempel 100 000 000 och dessa kan därför radbrytas', $this->user['id'], date('Y-m-d H:i:s')));
+	  $this->db->ExecuteQuery(self::SQL('insert content'), array('typographer','filter-typographer', 'post', 'Filter: Typographer', 'Typographer utökar smartypants och lägger till "hårda" mellanslag för kolon : utropstecken ! och frågetecken ?. Typographer lägger också till hårda mellanslag vid långa talföljder som har tusen-separatorer, till exempel 100 000 000 000 000.', $this->user['id'], date('Y-m-d H:i:s')));
+      $this->AddMessage('success', 'Successfully created the database tables and created some default blog posts and pages.');
     } catch(Exception$e) {
       die("$e<br/>Failed to open database: " . $this->config['database'][$this->config['database']['type']]['dsn']);
     }

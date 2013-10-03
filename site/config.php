@@ -121,4 +121,3 @@ $lt->config['hashing_algorithm'] = 'sha1salt';
 * Allow or disallow creation of new user accounts.
 */
 $lt->config['create_new_users'] = true;
-
