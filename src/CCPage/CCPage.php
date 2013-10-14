@@ -16,13 +16,13 @@ class CCPage extends CObject implements IController {
 
 
   /**
-   * Display an empty page.
+   * Display all pages.
    */
   public function Index() {
     $content = new CMContent();
     $this->views->SetTitle('Page')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
-                  'content' => null,
+                  'contents' => $content->ListAll(array('type'=>'page', 'order-by'=>'title', 'order-order'=>'DESC')),
                 ));
   }
 
