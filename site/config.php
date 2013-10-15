@@ -74,6 +74,7 @@ $lt->config['controllers'] = array(
   'blog' => array('enabled' => true,'class' => 'CCBlog'),
   'user' => array('enabled' => true,'class' => 'CCUser'),
   'acp' => array('enabled' => true,'class' => 'CCAdminControlPanel'),
+  'theme' => array('enabled' => true,'class' => 'CCTheme'),
 );
 
 /**
@@ -81,7 +82,8 @@ $lt->config['controllers'] = array(
  */
 $lt->config['theme'] = array(
   // The name of the theme in the theme directory
-  'name'    => 'core', 
+  'name'    => 'grid', 
+  'stylesheet'  => 'style.php',   // Main stylesheet to include in template files
 );
 
 /**
