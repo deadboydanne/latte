@@ -116,10 +116,22 @@ function current_url() {
 
 
 /**
- * Render all views.
- */
-function render_views() {
-  return CLatte::Instance()->views->Render();
+* Render all views.
+*
+* @param $region string the region to draw the content in.
+*/
+function render_views($region='default') {
+  return CLatte::Instance()->views->Render($region);
+}
+
+
+/**
+* Check if region has views. Accepts variable amount of arguments as regions.
+*
+* @param $region string the region to draw the content in.
+*/
+function region_has_content($region='default' /*...*/) {
+  return CLatte::Instance()->views->RegionHasView(func_get_args());
 }
 
 /**
