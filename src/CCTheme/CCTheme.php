@@ -1,9 +1,9 @@
 <?php
 /**
-* A test controller for themes.
-* 
-* @package LatteCore
-*/
+ * A test controller for themes.
+ * 
+ * @package LatteCore
+ */
 class CCTheme extends CObject implements IController {
 
 
@@ -15,15 +15,27 @@ class CCTheme extends CObject implements IController {
   }
 
 
-    /**
+  /**
    * Display what can be done with this controller.
    */
   public function Index() {
+    // Get a list of all kontroller methods
+    $rc = new ReflectionClass(__CLASS__);
+    $methods = $rc->getMethods(ReflectionMethod::IS_PUBLIC);
+    $items = array();
+    foreach($methods as $method) {
+      if($method->name != '__construct' && $method->name != '__destruct' && $method->name != 'Index') {
+        $items[] = $this->request->controller . '/' . mb_strtolower($method->name);
+      }
+   }
+
     $this->views->SetTitle('Theme')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
                   'theme_name' => $this->config['theme']['name'],
+                  'methods' => $items,
                 ));
   }
+
 
   /**
    * Put content in some regions.
@@ -40,7 +52,8 @@ class CCTheme extends CObject implements IController {
     }
   }
 
-/**
+
+  /**
    * Put content in all regions.
    */
   public function AllRegions() {
@@ -52,4 +65,13 @@ class CCTheme extends CObject implements IController {
   }
 
 
-}
+  /**
+   * Display text as h1h6 and paragraphs with some inline formatting.
+   */
+  public function H1H6() {
+    $this->views->SetTitle('Theme testing headers and paragraphs')
+                ->AddInclude(__DIR__ . '/h1h6.tpl.php', array(), 'primary');
+  }
+
+
+} 

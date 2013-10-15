@@ -1,4 +1,139 @@
-a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:5173:"body {
+a:4:{s:4:"root";s:10:"style.less";s:8:"compiled";s:8586:"html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100.01%;
+  font: inherit;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section {
+  display: block;
+}
+audio,
+canvas,
+video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+audio:not([controls]) {
+  display: none;
+}
+[hidden] {
+  display: none;
+}
+body {
   width: 100%;
   *zoom: 1;
 }
@@ -10,13 +145,155 @@ body:after {
 body:after {
   clear: both;
 }
+body {
+  color: #222;
+  font: 100.01%/1.375 Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 h1 {
-  border-bottom: 3px double #ccc;
-  padding-bottom: 4px;
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-size: 2.375em;
+  line-height: 1.1579;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 21px;
 }
 h2 {
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 4px;
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1.875em;
+  line-height: 1.4667;
+}
+h3 {
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1.375em;
+  line-height: 1;
+}
+h4 {
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1.25em;
+  line-height: 1.1;
+}
+h5 {
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1em;
+  font-weight: bold;
+}
+h6 {
+  font-weight: normal;
+  color: #111;
+  margin-bottom: 22px;
+  font-family: Cambria, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+h1 img,
+h2 img,
+h3 img,
+h4 img,
+h5 img,
+h6 img {
+  margin: 0;
+}
+p {
+  margin-bottom: 1.375em;
+}
+a {
+  color: #600;
+  text-decoration: underline;
+}
+a:focus,
+a:hover {
+  color: #990000;
+  text-decoration: none;
+}
+blockquote {
+  margin-left: 1em;
+  margin-bottom: 1.375em;
+}
+strong,
+dfn {
+  font-weight: bold;
+}
+em,
+dfn {
+  font-style: italic;
+}
+pre {
+  margin-bottom: 1.375em;
+  white-space: pre;
+}
+pre,
+code,
+tt,
+.code {
+  font: 1em/1.375 "Courier New", Courier, monospace;
+}
+li ul,
+li ol {
+  margin: 0;
+}
+ul,
+ol {
+  margin: 0.6875em 1.5em 1.375em 0;
+  padding-left: 1.5em;
+}
+ul {
+  list-style-type: disc;
+}
+ol {
+  list-style-type: decimal;
+}
+dl {
+  margin: 0 0 1.375em 0;
+}
+dl dt {
+  font-weight: bold;
+}
+dd {
+  margin-left: 1.5em;
+}
+table {
+  margin-bottom: 1.375em;
+  width: 100%;
+}
+caption {
+  text-align: left;
+  font-style: italic;
+}
+thead {
+  border-bottom: 2px solid #222;
+}
+th {
+  vertical-align: bottom;
+  font-weight: bold;
+  text-align: left;
+}
+th,
+td {
+  padding: 5px 10px 5px 5px;
+}
+tbody tr {
+  border-bottom: 1px solid #eee;
+}
+tbody tr:hover {
+  color: #000;
+}
+tfoot {
+  font-style: italic;
 }
 input,
 textarea {
@@ -53,7 +330,6 @@ body {
   padding: 0;
   color: #333;
   background-color: #fff;
-  font: 1em Verdana, Arial, Helvetica, sans-serif;
 }
 #outer-wrap-header {
   height: 88px;
@@ -273,7 +549,6 @@ body {
   float: left;
   width: 940px;
   margin: 0 10px;
-  font-size: 0.80em;
   color: #666;
 }
 a {
@@ -339,4 +614,4 @@ a:focus {
 .silent {
   color: #999;
 }
-";s:5:"files";a:2:{s:65:"/Applications/MAMP/htdocs/bth/phpmvc/latte/themes/grid/style.less";i:1381843784;s:93:"/Applications/MAMP/htdocs/bth/phpmvc/latte/themes/grid/semantic.gs/stylesheets/less/grid.less";i:1331866480;}s:7:"updated";i:1381843787;}
+";s:5:"files";a:2:{s:65:"/Applications/MAMP/htdocs/bth/phpmvc/latte/themes/grid/style.less";i:1381844432;s:93:"/Applications/MAMP/htdocs/bth/phpmvc/latte/themes/grid/semantic.gs/stylesheets/less/grid.less";i:1331866480;}s:7:"updated";i:1381844602;}
