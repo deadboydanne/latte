@@ -11,7 +11,9 @@ class CCTheme extends CObject implements IController {
    * Constructor
    */
   public function __construct() { parent::__construct(); 
-    $this->views->AddStyle('body:hover{background:#fff url('.$this->request->base_url.'themes/grid/grid_12_60_20.png) repeat-y center top;}');
+    if($this->config['theme']['name'] == 'grid') {
+	  $this->views->AddStyle('body:hover{background:#fff url('.$this->request->base_url.'themes/grid/grid_12_60_20.png) repeat-y center -6px;}');
+	}
   }
 
 
@@ -58,7 +60,7 @@ class CCTheme extends CObject implements IController {
    */
   public function AllRegions() {
     $this->views->SetTitle('Theme display content for all regions');
-    foreach($this->config['theme']['regions'] as $val) {
+    foreach($this->config['theme'][$this->config['theme']['name']]['regions'] as $val) {
       $this->views->AddString("This is region: $val", array(), $val)
                   ->AddStyle('#'.$val.'{background-color:hsla(0,0%,90%,0.5);}');
     }

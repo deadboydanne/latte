@@ -3,13 +3,22 @@
  * Helpers for the template file.
  */
 
+
+
+
 /**
- * Add static entries for use in the template file. 
+ * Login menu. Creates a menu which reflects if user is logged in or not.
  */
-$lt->data['header'] = 'Latte';
-$lt->data['slogan'] = 'A PHP-based MVC-inspired CMF';
-$lt->data['favicon']      = theme_url('logo_80x80.png');
-$lt->data['logo']         = theme_url('logo_80x80.png');
-$lt->data['logo_width']   = 80;
-$lt->data['logo_height']  = 80;
-$lt->data['footer'] = '<p>Latte &copy; by Andreas Carlsson (andreasc89@gmail.com)</p>';
+function login_menu() {
+  $lt = CLatte::Instance();
+  if($lt->user['isAuthenticated']) {
+    $items = "<a href='" . create_url('user/profile') . "'><img class='gravatar' src='" . get_gravatar(20) . "' alt='' />" . $lt->user['username'] . "</a> ";
+    if($lt->user['hasRoleAdministrator']) {
+      $items .= "<a href='" . create_url('acp') . "'>Admin-panel</a> ";
+    }
+    $items .= "<a href='" . create_url('user/logout') . "'>Log out</a> ";
+  } else {
+    $items = "<a href='" . create_url('user/login') . "'>Login</a> ";
+  }
+  return "<nav>$items</nav>";
+}

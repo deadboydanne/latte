@@ -82,16 +82,29 @@ $lt->config['controllers'] = array(
  */
 $lt->config['theme'] = array(
   // The name of the theme in the theme directory
-  'name'    => 'grid', 
-  'stylesheet'  => 'style.php',   // Main stylesheet to include in template files
+  'name'    => 'bootstrap', 
+  'stylesheet'  => 'css/bootstrap.css',   // Main stylesheet to include in template files
   'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
-// A list of valid theme regions
-  'regions' => array('flash','featured-first','featured-middle','featured-last',
-  'primary','sidebar','triptych-first','triptych-middle','triptych-last',
-  'footer-column-one','footer-column-two','footer-column-three','footer-column-four',
-  'footer',
+  
+// Add static entries for use in the template file. 
+  'data' => array(
+    'header' => 'Latte',
+    'slogan' => 'A PHP-based MVC-inspired CMF',
+    'favicon' => 'logo_80x80.png',
+    'logo' => 'logo_80x80.png',
+    'logo_width'  => 80,
+    'logo_height' => 80,
+    'footer' => '<p>Latte &copy; by Andreas Carlsson (andreasc89@gmail.com)</p>',
   ),
 );
+
+/**
+ * Theme specific configuration
+ */
+
+$lt->config['theme']['grid']['regions'] = array('flash','featured-first','featured-middle','featured-last', 'primary','sidebar','triptych-first','triptych-middle','triptych-last', 'footer-column-one','footer-column-two','footer-column-three','footer-column-four', 'footer');
+
+$lt->config['theme']['bootstrap']['regions'] = array('primary','sidebar','footer-column-one','footer-column-two','footer-column-three','footer-column-four','footer');
 
 /**
 * Set database(s). Choose MySQL for now, might implement other later.

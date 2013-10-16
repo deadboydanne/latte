@@ -122,6 +122,10 @@ class CLatte implements ISingleton {
   
     // Is theme enabled?
     if(!isset($this->config['theme'])) { return; }
+
+	if(isset($this->config['theme']['data'])) {
+      extract($this->config['theme']['data']);
+    }
     
     // Get the paths and settings for the theme
     $themeName  = $this->config['theme']['name'];
