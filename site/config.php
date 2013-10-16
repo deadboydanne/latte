@@ -82,8 +82,8 @@ $lt->config['controllers'] = array(
  */
 $lt->config['theme'] = array(
   // The name of the theme in the theme directory
-  'name'    => 'bootstrap', 
-  'stylesheet'  => 'css/bootstrap.css',   // Main stylesheet to include in template files
+  'name'    => 'grid', 
+  'stylesheet'  => 'style.php',   // Main stylesheet to include in template files
   'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
   
 // Add static entries for use in the template file. 

@@ -25,7 +25,7 @@
 include dirname(__FILE__)."/lessphp/lessc.inc.php";
 
 // Use gzip if available
-// ob_start("ob_gzhandler") or ob_start();
+ob_start("ob_gzhandler") or ob_start();
 
 
 /**
