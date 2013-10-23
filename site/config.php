@@ -75,6 +75,7 @@ $lt->config['controllers'] = array(
   'user' => array('enabled' => true,'class' => 'CCUser'),
   'acp' => array('enabled' => true,'class' => 'CCAdminControlPanel'),
   'theme' => array('enabled' => true,'class' => 'CCTheme'),
+  'module' => array('enabled' => true,'class' => 'CCModules'),
 );
 
 /**
