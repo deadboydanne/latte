@@ -287,9 +287,25 @@ padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
 .success a         { color: #264409; }
 .info a            { color: #205791; }
 
+/** --------------------------------------------------------------
+* Navbar
+*/
+#navbar{
+  ul.menu{list-style-type:none;padding:2px 8px;margin-bottom:20px;
+    li{padding:0;margin:0;display:inline;
+      a{padding:6px 8px;text-decoration:none;border:2px solid transparent;
+        &:hover{background:#fff;border-left: 2px solid #000;border-right: 2px solid #000;border-bottom:2px solid #000;}
+        &.selected{background:#fff;border-left: 2px solid #000;border-right: 2px solid #000;border-bottom:2px solid #000;}
+      }
+    }
+  }
+}
 
 /** --------------------------------------------------------------
  * Misc
- */
+ *//**
+ * Misc
+*/
+.secret {display:none;}
 .smaller-text{font-size:smaller;}
 .silent{color:#999;}

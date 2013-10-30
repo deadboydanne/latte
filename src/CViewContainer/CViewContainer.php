@@ -6,60 +6,63 @@
  */
 class CViewContainer {
 
-	/**
-	 * Members
-	 */
-	private $data = array();
-	private $views = array();
+        /**
+         * Members
+         */
+        private $data = array();
+        private $views = array();
+        
+
+        /**
+         * Constructor
+         */
+        public function __construct() { ; }
 
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() { ; }
-
-
-	/**
-	 * Getters.
-	 */
+        /**
+         * Getters.
+         */
   public function GetData() { return $this->data; }
   
   
-	/**
-	 * Set the title of the page.
-	 *
-	 * @param $value string to be set as title.
-	 */
-	public function SetTitle($value) {
+        /**
+         * Set the title of the page.
+         *
+         * @param $value string to be set as title.
+         */
+        public function SetTitle($value) {
     return $this->SetVariable('title', $value);
   }
 
 
-	/**
-	 * Set any variable that should be available for the theme engine.
-	 *
-	 * @param $value string to be set as title.
-	 */
-	public function SetVariable($key, $value) {
-	  $this->data[$key] = $value;
-	  return $this;
+        /**
+         * Set any variable that should be available for the theme engine.
+         *
+         * @param $value string to be set as title.
+         * @returns $this.
+         */
+        public function SetVariable($key, $value) {
+          $this->data[$key] = $value;
+          return $this;
   }
 
+  
   /**
-   * Render all views according to their type.
-   * 
-   * @param $region string the region to render views for.
+   * Add inline style.
+   *
+   * @param $value string to be added as inline style.
+   * @returns $this.
    */
-  public function Render($region='default') {
-    if(!isset($this->views[$region])) return;
-    foreach($this->views[$region] as $view) {
-      switch($view['type']) {
-        case 'include': extract($view['variables']); include($view['file']); break;
-        case 'string':  extract($view['variables']); echo $view['string']; break;
-      }
+  public function AddStyle($value) {
+    if(isset($this->data['inline_style'])) {
+      $this->data['inline_style'] .= $value;
+    } else {
+      $this->data['inline_style'] = $value;
     }
+    return $this;
   }
 
+  
   /**
    * Add a view as file to be included and optional variables.
    *
@@ -72,7 +75,7 @@ class CViewContainer {
     $this->views[$region][] = array('type' => 'include', 'file' => $file, 'variables' => $variables);
     return $this;
   }
-
+  
 
   /**
    * Add text and optional variables.
@@ -86,7 +89,8 @@ class CViewContainer {
     $this->views[$region][] = array('type' => 'string', 'string' => $string, 'variables' => $variables);
     return $this;
   }
-
+  
+        
   /**
    * Check if there exists views for a specific region.
    *
@@ -105,21 +109,22 @@ class CViewContainer {
       return(isset($this->views[$region]));
     }
   }
-
+  
+  
   /**
-   * Add inline style.
-   *
-   * @param $value string to be added as inline style.
-   * @returns $this.
+   * Render all views according to their type.
+   * 
+   * @param $region string the region to render views for.
    */
-  public function AddStyle($value) {
-    if(isset($this->data['inline_style'])) {
-      $this->data['inline_style'] .= $value;
-    } else {
-      $this->data['inline_style'] = $value;
+  public function Render($region='default') {
+    if(!isset($this->views[$region])) return;
+    foreach($this->views[$region] as $view) {
+      switch($view['type']) {
+        case 'include': if(isset($view['variables'])) extract($view['variables']); include($view['file']); break;
+        case 'string':  if(isset($view['variables'])) extract($view['variables']); echo $view['string']; break;
+      }
     }
-    return $this;
   }
-
+  
 
 }
