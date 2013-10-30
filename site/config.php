@@ -114,7 +114,7 @@ $lt->config['theme']['bootstrap']['regions'] = array('primary','sidebar','footer
 $lt->config['database']['type'] = 'mysql';
 
 // Database local
-if($_SERVER['REMOTE_ADDR'] == '::1') {
+if($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['REMOTE_ADDR'] == '::1') {
 $lt->config['database']['mysql']['dsn'] = 'mysql:host=localhost;dbname=latte_db1';
 $lt->config['database']['mysql']['user'] = 'root';
 $lt->config['database']['mysql']['pass'] = 'root';

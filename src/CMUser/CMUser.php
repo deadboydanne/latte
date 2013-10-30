@@ -4,7 +4,7 @@
 * 
 * @package LatteCore
 */
-class CMUser extends CObject implements IHasSQL, ArrayAccess {
+class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
 
   /**
    * Constructor
@@ -31,6 +31,9 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
    */
   public static function SQL($key=null) {
     $queries = array(
+      'set foreign key check'   => "SET foreign_key_checks = 0;",
+      'unset foreign key check' => "SET foreign_key_checks = 1;",
+      'drop table user'         => "DROP TABLE IF EXISTS User;",
       'drop table user'         => "DROP TABLE IF EXISTS User;",
       'drop table group'        => "DROP TABLE IF EXISTS Groups;",
       'drop table user2group'   => "DROP TABLE IF EXISTS User2Groups;",
@@ -52,38 +55,47 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess {
     return $queries[$key];
   }
 
-
-    /**
-   * Init the database and create appropriate tables.
+  /**
+   * Implementing interface IModule. Manage install/update/deinstall and equal actions.
+   *
+   * @param string $action what to do.
    */
-  public function Init() {
-    try {
-      $this->db->ExecuteQuery(self::SQL('drop table user2group'));
-      $this->db->ExecuteQuery(self::SQL('drop table group'));
-      $this->db->ExecuteQuery(self::SQL('drop table user'));
-      $this->db->ExecuteQuery(self::SQL('create table user'));
-      $this->db->ExecuteQuery(self::SQL('create table group'));
-      $this->db->ExecuteQuery(self::SQL('create table user2group'));
-	  $password = $this->CreatePassword('root');
-      $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s')));
-      $idRootUser = $this->db->LastInsertId();
-	  $password = $this->CreatePassword('doe');
-      $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s')));
-      $idDoeUser = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'The Administrator Group', date('Y-m-d H:i:s')));
-      $idAdminGroup = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'The User Group', date('Y-m-d H:i:s')));
-      $idUserGroup = $this->db->LastInsertId();
-      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup, date('Y-m-d H:i:s')));
-      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup, date('Y-m-d H:i:s')));
-      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup, date('Y-m-d H:i:s')));
-
-      $this->session->AddMessage('notice', 'Successfully created the database tables and created a default admin user as root:root and an ordinary user as doe:doe.');
-    } catch(Exception$e) {
-      die("$e<br/>Failed to open database: " . $this->config['database'][$this->config['database']['type']]['dsn']);
+  public function Manage($action=null) {
+    switch($action) {
+      case 'install': 
+        try {
+	      $this->db->ExecuteQuery(self::SQL('unset foreign key check'));
+	      $this->db->ExecuteQuery(self::SQL('drop table user2group'));
+	      $this->db->ExecuteQuery(self::SQL('set foreign key check'));
+	      $this->db->ExecuteQuery(self::SQL('drop table group'));
+	      $this->db->ExecuteQuery(self::SQL('drop table user'));
+	      $this->db->ExecuteQuery(self::SQL('create table user'));
+	      $this->db->ExecuteQuery(self::SQL('create table group'));
+	      $this->db->ExecuteQuery(self::SQL('create table user2group'));
+		  $password = $this->CreatePassword('root');
+	      $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s')));
+	      $idRootUser = $this->db->LastInsertId();
+		  $password = $this->CreatePassword('doe');
+	      $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s')));
+	      $idDoeUser = $this->db->LastInsertId();
+	      $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'The Administrator Group', date('Y-m-d H:i:s')));
+	      $idAdminGroup = $this->db->LastInsertId();
+	      $this->db->ExecuteQuery(self::SQL('insert into group'), array('user', 'The User Group', date('Y-m-d H:i:s')));
+	      $idUserGroup = $this->db->LastInsertId();
+	      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idAdminGroup, date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idRootUser, $idUserGroup, date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert into user2group'), array($idDoeUser, $idUserGroup, date('Y-m-d H:i:s')));
+          return array('success', 'Successfully created the database tables and created a default admin user as root:root and an ordinary user as doe:doe.');
+        } catch(Exception$e) {
+          die("$e<br/>Failed to open database: " . $this->config['database'][$this->config['database']['type']]['dsn']);
+        }   
+      break;
+      
+      default:
+        throw new Exception('Unsupported action for this module.');
+      break;
     }
   }
-  
 
   /**
    * Create new user.
