@@ -1,7 +1,7 @@
 /** 
 * Description: Sample theme for site which extends the Lydia grid-theme.
 */
-@import url(../../../themes/grid/style.php);
+@import url(../../../themes/grid/style.css);
 
 html{background-color:#ddd;}
 body{background-color:#bed;}
