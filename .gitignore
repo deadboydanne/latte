@@ -28,3 +28,7 @@ Thumbs.db
 # Project files #
 #################
 project_files/
+
+# Database config file #
+########################
+site/data/dbconfig.php
