@@ -1,6 +1,6 @@
 <?php
 /**
- * Holding a instance of Cltdia to enable use of $this in subclasses and provide some helpers.
+ * Holding a instance of CLatte to enable use of $this in subclasses and provide some helpers.
  *
  * @package LatteCore
  */
@@ -38,7 +38,7 @@ class CObject {
 
 
         /**
-         * Wrapper for same method in Cltdia. See there for documentation.
+         * Wrapper for same method in CLatte. See there for documentation.
          */
         protected function RedirectTo($urlOrController=null, $method=null, $arguments=null) {
     $this->lt->RedirectTo($urlOrController, $method, $arguments);
@@ -46,7 +46,7 @@ class CObject {
 
 
         /**
-         * Wrapper for same method in Cltdia. See there for documentation.
+         * Wrapper for same method in CLatte. See there for documentation.
          */
         protected function RedirectToController($method=null, $arguments=null) {
     $this->lt->RedirectToController($method, $arguments);
@@ -54,7 +54,7 @@ class CObject {
 
 
         /**
-         * Wrapper for same method in Cltdia. See there for documentation.
+         * Wrapper for same method in CLatte. See there for documentation.
          */
         protected function RedirectToControllerMethod($controller=null, $method=null, $arguments=null) {
     $this->lt->RedirectToControllerMethod($controller, $method, $arguments);
@@ -62,7 +62,7 @@ class CObject {
 
 
         /**
-         * Wrapper for same method in Cltdia. See there for documentation.
+         * Wrapper for same method in CLatte. See there for documentation.
          */
   protected function AddMessage($type, $message, $alternative=null) {
     return $this->lt->AddMessage($type, $message, $alternative);
@@ -70,7 +70,7 @@ class CObject {
 
 
         /**
-         * Wrapper for same method in Cltdia. See there for documentation.
+         * Wrapper for same method in CLatte. See there for documentation.
          */
         protected function CreateUrl($urlOrController=null, $method=null, $arguments=null) {
     return $this->lt->CreateUrl($urlOrController, $method, $arguments);

@@ -9,19 +9,18 @@
 <p>You can review its source directly on github: <a href='https://github.com/andreasc89/latte'>https://github.com/andreasc89/latte</a></p>
 
 <h2>Installation</h2>
-<p>First you have to make the data-directory writable. This is the place where Lydia needs
-to be able to write and create files.</p>
+<p>First you have to make the data-directory writable. This is the place where Latte needs to be able to write and create files.</p>
 <blockquote>
 <code>cd latte; chmod 777 site/data</code>
 </blockquote>
 
-<p>Second, you have to enter the username and password for the MySQL-database. Edit the file <code>dbconfig.php</code> in site/data and enter the following data:</p>
+<p>Second, you have to enter the username and password for the MySQL-database. Create the file <code>dbconfig.php</code> in <code>site/data</code> and enter the following:</p>
 <pre>
 &lt;?php
-$host = 'server';
+$host = 'database server';
 $dbname = 'name of the database';
-$user = 'username';
-$pass = 'password';
+$user = 'your username';
+$pass = 'your password';
 ?&gt;
 </pre>
 
