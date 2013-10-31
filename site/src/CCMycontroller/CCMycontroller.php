@@ -14,7 +14,7 @@ class CCMycontroller extends CObject implements IController {
    * The page about me
    */
   public function Index() {
-    $content = new CMContent(5);
+    $content = new CMContent(11);
     $this->views->SetTitle('About me'.htmlEnt($content['title']))
                 ->AddInclude(__DIR__ . '/page.tpl.php', array(
                   'content' => $content,

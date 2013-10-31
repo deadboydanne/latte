@@ -15,10 +15,15 @@ to be able to write and create files.</p>
 <code>cd latte; chmod 777 site/data</code>
 </blockquote>
 
-<p>Second, you have to enter the username and password for the MySQL-database.</p>
-<blockquote>
-<code>Configure the login credenials and server for your MySQL-database i the config.php file in the <b>site</b>-folder.</code>
-</blockquote>
+<p>Second, you have to enter the username and password for the MySQL-database. Edit the file <code>dbconfig.php</code> in site/data and enter the following data:</p>
+<pre>
+&lt;?php
+$host = 'server';
+$dbname = 'name of the database';
+$user = 'username';
+$pass = 'password';
+?&gt;
+</pre>
 
 <p>And the last step, initialise the modules for Latte. You can do this through a controller. Point your browser to the following link.</p>
 <blockquote>

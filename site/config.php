@@ -24,13 +24,14 @@ if($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['REMOTE_ADDR'] == '::1') {
 $lt->config['database']['mysql']['dsn'] = 'mysql:host=localhost;dbname=latte_db1';
 $lt->config['database']['mysql']['user'] = 'root';
 $lt->config['database']['mysql']['pass'] = 'root';
-} else {
-// Database online
-$lt->config['database']['mysql']['dsn'] = 'mysql:host=blu-ray.student.bth.se;dbname=anca13';
-$lt->config['database']['mysql']['user'] = 'anca13';
-$lt->config['database']['mysql']['pass'] = 'fo{(,Sq8';
+} else if(file_exists('site/data/dbconfig.php')) {
+// Database configuration
+include('site/data/dbconfig.php');
+$dsn = 'mysql:host='.$host.';dbname='.$dbname;
+$lt->config['database']['mysql']['dsn'] = $dsn;
+$lt->config['database']['mysql']['user'] = $user;
+$lt->config['database']['mysql']['pass'] = $pass;
 }
-
 
 /**
 * Define a routing table for urls.
