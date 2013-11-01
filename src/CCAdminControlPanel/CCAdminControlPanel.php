@@ -101,10 +101,11 @@ class CCAdminControlPanel extends CObject implements IController {
     if($form['password']['value'] != $form['password1']['value'] || empty($form['password']['value']) || empty($form['password1']['value'])) {
       $this->AddMessage('error', 'Password does not match or is empty.');
     } else {
-      $ret = $this->user->ChangePassword($form['password']['value']);
+      $this->edituser = new CMAdminControlPanel();
+      $ret = $this->edituser->ChangePassword($form['password']['value'],$form['id']['value']);
       $this->AddMessage($ret, 'Saved new password.', 'Failed updating password.');
     }
-    $this->RedirectToController('users/'.$this->user['id']);
+    $this->RedirectToController('users/'.$form['id']['value']);
   }
   
 
@@ -112,12 +113,10 @@ class CCAdminControlPanel extends CObject implements IController {
    * Save updates to profile information.
    */
   public function DoProfileSave($form) {
-    $this->user['name'] = $form['name']['value'];
-    $this->user['email'] = $form['email']['value'];
-    $this->user['id'] = $this->user['id'];
-    $ret = $this->user->Save();
+  	$this->edituser = new CMAdminControlPanel();
+    $ret = $this->edituser->Save($form['name']['value'], $form['email']['value'], $form['id']['value']);
     $this->AddMessage($ret, 'Saved profile.', 'Failed saving profile.');
-    $this->RedirectToController('users/'.$this->user['id']);
+    $this->RedirectToController('users/'.$form['id']['value']);
   }
   
 
@@ -131,7 +130,8 @@ class CCAdminControlPanel extends CObject implements IController {
       $this->RedirectToController('Create');
     }
     $this->views->SetTitle('Create user')
-                ->AddInclude(__DIR__ . '/create.tpl.php', array('form' => $form->GetHTML()));     
+                ->AddInclude(__DIR__ . '/create.tpl.php', array('form' => $form->GetHTML()), 'primary')
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
   }
 
   /**
@@ -148,9 +148,8 @@ class CCAdminControlPanel extends CObject implements IController {
                            $form['name']['value'],
                            $form['email']['value']
                            )) {
-      $this->AddMessage('success', "Welcome {$this->user['name']}. Your have successfully created a new account.");
-      $this->user->Login($form['username']['value'], $form['password']['value']);
-      $this->RedirectToController('profile');
+      $this->AddMessage('success', "You have successfully created an account for {$form['name']['value']}.");
+      $this->RedirectToController('users');
     } else {
       $this->AddMessage('notice', "Failed to create an account.");
       $this->RedirectToController('create');

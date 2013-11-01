@@ -9,7 +9,7 @@
   </ul>
   	<hr>
   <ul>
-  	<li><a href="<?=create_url('acp/createuser')?>">Create new user</a></li>
+  	<li><a href="<?=create_url('acp/create')?>">Create new user</a></li>
   </ul>
 <?php else: ?>
   <p>Access denied.</p>

@@ -75,13 +75,12 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
   }
   
 /**
-   * Save user profile to database and update user profile in session.
+   * Save user profile to database.
    *
    * @returns boolean true if success else false.
    */
-  public function Save() {
-    $this->db->ExecuteQuery(self::SQL('update profile'), array($this['name'], $this['email'], date('Y-m-d H:i:s'), $this['id']));
-    $this->session->SetAuthenticatedUser($this->profile);
+  public function Save($name, $email, $id) {
+    $this->db->ExecuteQuery(self::SQL('update profile'), array($name, $email, date('Y-m-d H:i:s'), $id));
     return $this->db->RowCount() === 1;
   }
   
@@ -121,9 +120,9 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
    * @param $plain string plaintext of the new password
    * @returns boolean true if success else false.
    */
-  public function ChangePassword($plain) {
+  public function ChangePassword($plain,$id) {
     $password = $this->CreatePassword($plain);
-    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s'), $this['id']));
+    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s'), $id));
     return $this->db->RowCount() === 1;
   }
 
