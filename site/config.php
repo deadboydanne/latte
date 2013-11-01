@@ -9,7 +9,7 @@
  * Set level of error reporting
  */
 error_reporting(-1);
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 
 
 
@@ -19,18 +19,28 @@ ini_set('display_errors', 1);
 
 $lt->config['database']['type'] = 'mysql';
 
-// Database local
-if($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['REMOTE_ADDR'] == '::1') {
-$lt->config['database']['mysql']['dsn'] = 'mysql:host=localhost;dbname=latte_db1';
-$lt->config['database']['mysql']['user'] = 'root';
-$lt->config['database']['mysql']['pass'] = 'root';
-} else if(file_exists('site/data/dbconfig.php')) {
-// Database configuration
+// Database credentials
+if(file_exists('site/data/dbconfig.php')) {
 include('site/data/dbconfig.php');
 $dsn = 'mysql:host='.$host.';dbname='.$dbname;
 $lt->config['database']['mysql']['dsn'] = $dsn;
 $lt->config['database']['mysql']['user'] = $user;
 $lt->config['database']['mysql']['pass'] = $pass;
+
+// Test connection
+//$testdb = new PDO('mysql:host='.$host.';port='.$port.';dbname='.$db, $user, $pass, $options) or die("Cannot Create PDO!");
+
+$testdb = mysqli_connect($host,$user,$pass,$dbname);
+
+if (mysqli_connect_errno()) {
+$lt->config['database']['active'] = 0;
+} else {
+$lt->config['database']['active'] = 1;
+}
+mysqli_close($testdb);
+
+} else {
+$lt->config['database']['active'] = 0;
 }
 
 /**
@@ -131,6 +141,7 @@ $lt->config['controllers'] = array(
   'acp' => array('enabled' => true,'class' => 'CCAdminControlPanel'),
   'theme' => array('enabled' => true,'class' => 'CCTheme'),
   'module' => array('enabled' => true,'class' => 'CCModules'),
+  'setup' => array('enabled' => true,'class' => 'CCSetup'),
   'my'        => array('enabled' => true,'class' => 'CCMycontroller'),
 );
 

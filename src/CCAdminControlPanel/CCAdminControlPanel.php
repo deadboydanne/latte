@@ -68,6 +68,35 @@ class CCAdminControlPanel extends CObject implements IController {
   }
   }
   
+  
+  /**
+   * View and edit user profile.
+   */
+  public function Groups($id = null) {
+  	$users = new CMAdminControlPanel();
+  	if(isset($id)) {
+    $form = new CFormUserProfile($this, $users->GetUser($id));
+    $form->Check();
+    $this->views->SetTitle('User Profile')
+                ->AddInclude(__DIR__ . '/editgroup.tpl.php', array(
+                  'is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,
+                  'edituser' => $users->GetUser($id),
+                  'profile_form'=>$form->GetHTML(),
+                ))
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
+  	} else {
+    $this->views->SetTitle('User Profile')
+                ->AddInclude(__DIR__ . '/groups.tpl.php', array(
+                  'is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,
+                  'allusers' => $users->ListAllUsers(),
+                ))
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
+  }
+  }
+  
+  
   /**
    * Edit a selected content, or prepare to create new content if argument is missing.
    *

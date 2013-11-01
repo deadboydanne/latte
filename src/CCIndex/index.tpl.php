@@ -1,5 +1,6 @@
-<h1>Index Controller</h1>
-<p>Welcome to Latte index controller.</p>
+<h1>Welcome to Latte!</h1>
+
+<?php if($lt->config['database']['active']): ?>
 
 <h2>Download</h2>
 <p>You can download Latte from github.</p>
@@ -28,3 +29,14 @@ $pass = 'your password';
 <blockquote>
 <a href='<?=create_url('module/install')?>'>module/install</a>
 </blockquote>
+
+<? else: ?>
+
+
+<h2>Looks like it's your first time here.</h2>
+<p>Please go to the <a href="<?=create_url('setup');?>">setup</a>-controller to check that your server is capable of running the framework and connect the framework to the your MySQL-database.</p>
+
+
+<? endif; ?>
+
+

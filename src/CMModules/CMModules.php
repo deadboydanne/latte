@@ -75,32 +75,6 @@ class CMModules extends CObject {
     return $modules;
   }
 
-  /**
-   * Install all modules.
-   *
-   * @returns array with a entry for each module and the result from installing it.
-   */
-  public function Install() {
-    $allModules = $this->ReadAndAnalyse();
-    uksort($allModules, function($a, $b) {
-        return ($a == 'CMUser' ? -1 : ($b == 'CMUser' ? 1 : 0));
-      }
-    );
-    $installed = array();
-    foreach($allModules as $module) {
-      if($module['isManageable']) {
-        $classname = $module['name'];
-        $rc = new ReflectionClass($classname);
-        $obj = $rc->newInstance();
-        $method = $rc->getMethod('Manage');
-        $installed[$classname]['name']    = $classname;
-        $installed[$classname]['result']  = $method->invoke($obj, 'install');
-      }
-    }
-    //ksort($installed, SORT_LOCALE_STRING);
-    return $installed;
-  }
-
 
   /**
    * Get info and details about a module.
