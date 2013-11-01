@@ -22,7 +22,10 @@
 <br>
 <h2>Create tables and insert information</h2>
 
-<div class="info">Only one little step left, let's create the tables in the database and insert some information.<br></div>
+<div class="info">
+<p>Only one little step left, let's create the tables in the database and insert some information. <a style="font-weight: bold;" href="<?=create_url('setup','install');?>">Let's go &rarr;</a></p>
+<p>Warning, this will erase all previous entries in the database.</p>
+</div>
 
 <? else: ?>
 

@@ -41,5 +41,16 @@ class CCSetup extends CObject implements IController {
   
   	$this->RedirectToController();
   }
+  
+/**
+   * Show a index-page and display what can be done through this controller.
+   */
+  public function Install() {
+    $modules = new CMSetup();
+    $results = $modules->Install();
+    $allModules = $modules->ReadAndAnalyse();
+    $this->views->SetTitle('Installation')
+                ->AddInclude(__DIR__ . '/install.tpl.php', array('modules'=>$results), 'primary');
+  }
 
 }
