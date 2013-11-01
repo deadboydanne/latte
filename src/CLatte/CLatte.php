@@ -273,14 +273,14 @@ class CLatte implements ISingleton {
       foreach($this->config['menus'][$menu] as $val) {
         $selected = null;
         if($val['url'] == $this->request->request || $val['url'] == $this->request->routed_from) {
-          $selected = " class='selected'";
+          $selected = " class='active'";
         }
-        $items .= "<li><a {$selected} href='" . $this->CreateUrl($val['url']) . "'>{$val['label']}</a></li>\n";
+        $items .= "<li {$selected}><a href='" . $this->CreateUrl($val['url']) . "'>{$val['label']}</a></li>\n";
       }
     } else {
       throw new Exception('No such menu.');
     }     
-    return "<ul class='menu {$menu}'>\n{$items}</ul>\n";
+    return $items;
   }
 
 

@@ -49,6 +49,18 @@ class CMDatabase {
     $this->stmt->execute($params);
     return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
   }
+  
+  
+   /**
+    * Execute a select-query with arguments and return the first result.
+    */
+  public function ExecuteSelectQuery($query, $params=array()){
+    $this->stmt = $this->db->prepare($query);
+    self::$queries[] = $query; 
+    self::$numQueries++;
+    $this->stmt->execute($params);
+    return $this->stmt->fetch(PDO::FETCH_ASSOC);
+  }
 
 
   /**

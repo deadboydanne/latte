@@ -57,8 +57,8 @@ $lt->config['url_type'] = 1;
  * Set what to show as debug or developer information in the get_debug() theme helper.
  */
 $lt->config['debug']['latte'] = false;
-$lt->config['debug']['db-num-queries'] = true;
-$lt->config['debug']['db-queries'] = true;
+$lt->config['debug']['db-num-queries'] = false;
+$lt->config['debug']['db-queries'] = false;
 $lt->config['debug']['timer'] = true;
 
 /**
@@ -86,6 +86,7 @@ $lt->config['character_encoding'] = 'UTF-8';
  * Define language
  */
 $lt->config['language'] = 'en';
+$lt->config['i18n'] = function_exists('gettext');
 
 
 /**
@@ -138,9 +139,9 @@ $lt->config['controllers'] = array(
  */
 $lt->config['theme'] = array(
   // The name of the theme in the theme directory
-  'path'    => 'site/themes/mytheme',
-  'parent'          => 'themes/grid',
-  'name'    => 'grid', 
+  'path'    => 'site/themes/cloudtheme',
+  'parent'          => 'themes/bootstrap',
+  'name'    => 'bootstrap', 
   'stylesheet'  => 'style.css',   // Main stylesheet to include in template files
   'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
   'menu_to_region' => array('my-navbar'=>'navbar'),

@@ -7,6 +7,7 @@
  *
  * Designed and built with all the love in the world by @mdo and @fat.
  */
+ 
 
 .clearfix {
   *zoom: 1;
@@ -6164,4 +6165,92 @@ a.badge:focus {
 
 .affix {
   position: fixed;
+}
+
+
+
+
+/* Added by Andreas Carlsson for Latte */
+
+.error,
+.alert,
+.warning,
+.notice,
+.success,
+.info {
+  padding: 0.8em;
+  margin-bottom: 1em;
+  border: 2px solid #ddd;
+}
+.error,
+.alert {
+  background: #fbe3e4;
+  color: #8a1f11;
+  border-color: #fbc2c4;
+}
+.notice,
+.warning {
+  background: #fff6bf;
+  color: #514721;
+  border-color: #ffd324;
+}
+.success {
+  background: #e6efc2;
+  color: #264409;
+  border-color: #c6d880;
+}
+.info {
+  background: #d5edf8;
+  color: #205791;
+  border-color: #92cae4;
+}
+.error a,
+.alert a {
+  color: #8a1f11;
+}
+.notice a,
+.warning a {
+  color: #514721;
+}
+.success a {
+  color: #264409;
+}
+.info a {
+  color: #205791;
+}
+
+
+caption {
+  text-align: left;
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100.01%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.secret {
+  display: none;
+}
+
+.input-width-500 {
+	width: 500px;
+}
+
+.input-height-300 {
+	height: 300px;
+}
+
+form {
+	inline: inline;
+}
+
+hr {
+	height: 3px;
+}
+
+h1 {
+	padding-bottom: 30px;
 }

@@ -8,9 +8,9 @@
 	<link rel='shortcut icon' href='<?=theme_url($favicon)?>'/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+    <meta name="description" content="Beskrivning av sidan">
     <meta name="author" content="">
-    <link rel='stylesheet' href='<?=$stylesheet?>'/>
+    <link rel='stylesheet' href='<?=theme_url($stylesheet)?>'/>
     <?php if(isset($inline_style)): ?><style><?=$inline_style?></style><?php endif; ?>
 
     <style type="text/css">
@@ -60,8 +60,10 @@
               <?=login_menu()?>
             </p>
             <ul class="nav">
-              <li class="active"><a href="#">Meny</a></li>
-              <li><a href="#">kommer senare</a></li>
+            	
+	  <?php if(region_has_content('navbar')): ?>
+      <?=render_views('navbar')?>
+      <?php endif; ?>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -69,16 +71,34 @@
     </div>
 
     <div class="container-fluid">
+    <?php if(region_has_content('sidebar')): ?>
       <div class="row-fluid">
         <div class="span3">
+        
           <div class="well sidebar-nav">
-            <?=render_views('sidebar')?>
+          <?=render_views('sidebar')?>
           </div><!--/.well -->
+         
         </div><!--/span-->
         <div class="span9">
           <div class="hero-unit">
             <div id='primary'><?=get_messages_from_session()?><?=@$main?><?=render_views('primary')?><?=render_views()?></div>
           </div>
+        </div><!--/span-->
+      </div><!--/row-->
+<?php else: ?>
+     
+     <div class="row-fluid">
+        <div class="span12">
+          <div class="hero-unit">
+            <div id='primary'><?=get_messages_from_session()?><?=@$main?><?=render_views('primary')?><?=render_views()?></div>
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+      
+<?php endif; ?>
+      
+      
           <div class="row-fluid">
   <?php if(region_has_content('footer-column-one', 'footer-column-two', 'footer-column-three', 'footer-column-four')): ?>
             <div id="footer-column-one" class="span3"><?=render_views('footer-column-one')?></div><!--/span-->
@@ -87,16 +107,13 @@
             <div id="footer-column-four" class="span3"><?=render_views('footer-column-four')?></div><!--/span-->
 <?php endif; ?>
           </div><!--/row-->
-        </div><!--/span-->
-      </div><!--/row-->
-
-      <hr>
+          <hr>
 	  <footer>
         <div id="footer"><?=render_views('footer')?><?=$footer?><?=get_debug()?></div>
 	  </footer>
 
     </div>
-
+<!-- Inactive all javascript
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap-transition.js"></script>
     <script src="js/bootstrap-alert.js"></script>
@@ -110,6 +127,7 @@
     <script src="js/bootstrap-collapse.js"></script>
     <script src="js/bootstrap-carousel.js"></script>
     <script src="js/bootstrap-typeahead.js"></script>
+-->
 
   </body>
 

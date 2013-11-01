@@ -1,10 +1,11 @@
 /** 
 * Description: Sample theme for site which extends the Latte grid-theme.
 */
-@import url(../../../themes/grid/style.css);
+@import url(../../../themes/bootstrap/css/bootstrap.css);
 
-html{background-color:#ddd;}
-body{background-color:#bed;}
+html{background-color:#0b2b40;}
+body{background-color:#2b4b60;}
 #outer-wrap-header{background-color:#fff;border-bottom:2px solid #000}
 #outer-wrap-footer{background-color:#ddd}
 a{color:#463}
+#footer{color:#ddd;}
