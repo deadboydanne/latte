@@ -75,10 +75,10 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
 	      $this->db->ExecuteQuery(self::SQL('create table group'));
 	      $this->db->ExecuteQuery(self::SQL('create table user2group'));
 		  $password = $this->CreatePassword('root');
-	      $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'The Administrator', 'root@dbwebb.se', $password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert into user'), array('root', 'Batman', 'batman@dbwebb.se', $password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s')));
 	      $idRootUser = $this->db->LastInsertId();
-		  $password = $this->CreatePassword('doe');
-	      $this->db->ExecuteQuery(self::SQL('insert into user'), array('doe', 'John/Jane Doe', 'doe@dbwebb.se', $password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s')));
+		  $password = $this->CreatePassword('user');
+	      $this->db->ExecuteQuery(self::SQL('insert into user'), array('user', 'Robin', 'robin@dbwebb.se', $password['algorithm'], $password['salt'], $password['password'], date('Y-m-d H:i:s')));
 	      $idDoeUser = $this->db->LastInsertId();
 	      $this->db->ExecuteQuery(self::SQL('insert into group'), array('admin', 'The Administrator Group', date('Y-m-d H:i:s')));
 	      $idAdminGroup = $this->db->LastInsertId();
