@@ -40,8 +40,10 @@ class CMGuestbook extends CObject implements IHasSQL, IModule {
     switch($action) {
       case 'install': 
         try {
+		  $this->db->ExecuteQuery(self::SQL('delete from guestbook'));
 		  $this->db->ExecuteQuery(self::SQL('create table guestbook'));
-          return array('success', 'Successfully created the database tables (or left them untouched if they already existed).');
+		  $this->session->AddMessage('info', 'Removed all messages from the database table and created a new table for guestbook if it didn\'t exist');
+          return array('success', 'Successfully created the database tables for guestbook.');
         } catch(Exception$e) {
           die("$e<br/>Failed to open database: " . $this->config['database'][$this->config['database']['type']]['dsn']);
         }

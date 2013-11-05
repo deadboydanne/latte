@@ -105,14 +105,16 @@ $lt->config['i18n'] = function_exists('gettext');
  * Create hardcoded menus and map them to a theme region through $ly->config['theme'].
  */
 $lt->config['menus'] = array(
-  'navbar' => array(
+  'fresh-install' => array(
     'home'      => array('label'=>'Home', 'url'=>'home'),
     'modules'   => array('label'=>'Modules', 'url'=>'module'),
     'content'   => array('label'=>'Content', 'url'=>'content'),
     'guestbook' => array('label'=>'Guestbook', 'url'=>'guestbook'),
     'blog'      => array('label'=>'Blog', 'url'=>'blog'),
+    'setup'      => array('label'=>'Setup', 'url'=>'setup'),
+    'acp'      => array('label'=>'Admin Control Panel', 'url'=>'acp'),
   ),
-  'my-navbar' => array(
+  'example-page' => array(
     'home'      => array('label'=>'About Me', 'url'=>'my'),
     'blog'      => array('label'=>'My Blog', 'url'=>'my/blog'),
     'guestbook' => array('label'=>'Guestbook', 'url'=>'my/guestbook'),
@@ -155,7 +157,7 @@ $lt->config['theme'] = array(
   'name'    => 'bootstrap', 
   'stylesheet'  => 'style.css',   // Main stylesheet to include in template files
   'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
-  'menu_to_region' => array('my-navbar'=>'navbar'),
+  'menu_to_region' => array('fresh-install'=>'navbar'),
 // Add static entries for use in the template file. 
   'data' => array(
     'header' => 'Latte',
