@@ -1,6 +1,6 @@
 <?php
 /**
- * Site configuration, this file is changed by user per site.
+ * Site configuration for Latte, this file is changed by user per site.
  *
  */
 
@@ -9,7 +9,7 @@
  * Set level of error reporting
  */
 error_reporting(-1);
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 
 
 
@@ -28,17 +28,13 @@ $lt->config['database']['mysql']['user'] = $user;
 $lt->config['database']['mysql']['pass'] = $pass;
 
 // Test connection
-//$testdb = new PDO('mysql:host='.$host.';port='.$port.';dbname='.$db, $user, $pass, $options) or die("Cannot Create PDO!");
-
 $testdb = mysqli_connect($host,$user,$pass,$dbname);
-
 if (mysqli_connect_errno()) {
 $lt->config['database']['active'] = 0;
 } else {
 $lt->config['database']['active'] = 1;
 }
 mysqli_close($testdb);
-
 } else {
 $lt->config['database']['active'] = 0;
 }

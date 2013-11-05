@@ -31,22 +31,18 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
    */
   public static function SQL($key=null) {
     $queries = array(
-      'drop table user'         => "DROP TABLE IF EXISTS User;",
-      'drop table user'         => "DROP TABLE IF EXISTS User;",
-      'drop table group'        => "DROP TABLE IF EXISTS Groups;",
-      'drop table user2group'   => "DROP TABLE IF EXISTS User2Groups;",
-      'create table user'  		=> "CREATE TABLE IF NOT EXISTS User (id INTEGER PRIMARY KEY AUTO_INCREMENT, username VARCHAR(30) UNIQUE, name VARCHAR(30), email VARCHAR(30), algorithm VARCHAR(10), salt VARCHAR(40), password VARCHAR(40), created DATETIME, updated DATETIME);",
-      'create table group'      => "CREATE TABLE IF NOT EXISTS Groups (id INTEGER PRIMARY KEY AUTO_INCREMENT, username VARCHAR(30) UNIQUE, name VARCHAR(30), created DATETIME);",
-      'create table user2group' => "CREATE TABLE IF NOT EXISTS User2Groups (idUser INTEGER AUTO_INCREMENT, idGroups INTEGER, created DATETIME, PRIMARY KEY(idUser, idGroups));",
-      'insert into user'        => 'INSERT INTO User (username,name,email,algorithm,salt,password,created) VALUES (?,?,?,?,?,?,?);',
       'insert into group'       => 'INSERT INTO Groups (username,name,created) VALUES (?,?,?);',
       'insert into user2group'  => 'INSERT INTO User2Groups (idUser,idGroups,created) VALUES (?,?,?);',
       'check user password'     => 'SELECT * FROM User WHERE (username=? OR email=?);',
       'select * from users'     => 'SELECT * FROM User;',
+      'select * from groups'    => 'SELECT * FROM Groups;',
       'get user by id'          => 'SELECT * FROM User WHERE (id=?);',
+      'get group by id'         => 'SELECT * FROM Groups WHERE (id=?);',
       'get group memberships'   => 'SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;',
 	  'update profile'          => "UPDATE User SET name=?, email=?, updated=? WHERE id=?;",
-      'update password'         => "UPDATE User SET algorithm=?, salt=?, password=?, updated=? WHERE id=?;",
+	  'update group'            => "UPDATE Groups SET username=?, name=? WHERE id=?;",
+	  'delete from groups'      => "DELETE FROM Groups WHERE id=?;",
+	  'delete g from user2groups' => "DELETE FROM User2Groups WHERE idGroups=?;",
      );
     
 	if(!isset($queries[$key])) {
@@ -73,14 +69,52 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
     }
     return true;
   }
+
+  /**
+   * Create new group.
+   *
+   * @param $username string short version of group name.
+   * @param $name string full group name.
+   * @returns boolean true if group was created or else false and sets failure message in session.
+   */
+  public function CreateGroup($username, $name) {
+    $this->db->ExecuteQuery(self::SQL('insert into group'), array($username, $name, date('Y-m-d H:i:s')));
+    if($this->db->RowCount() == 0) {
+      $this->AddMessage('error', "Failed to create group.");
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Delete group.
+   *
+   * @param $id int group id.
+   * @returns boolean true if success else false.
+   */
+  public function DeleteGroup($id) {
+    $this->db->ExecuteQuery(self::SQL('delete g from user2groups'), array($id));
+    $this->db->ExecuteQuery(self::SQL('delete from groups'), array($id));
+    return true;
+  }
   
-/**
+  /**
    * Save user profile to database.
    *
    * @returns boolean true if success else false.
    */
   public function Save($name, $email, $id) {
     $this->db->ExecuteQuery(self::SQL('update profile'), array($name, $email, date('Y-m-d H:i:s'), $id));
+    return $this->db->RowCount() === 1;
+  }
+  
+  /**
+   * Save user profile to database.
+   *
+   * @returns boolean true if success else false.
+   */
+  public function SaveGroup($username, $name, $id) {
+    $this->db->ExecuteQuery(self::SQL('update group'), array($username, $name, $id));
     return $this->db->RowCount() === 1;
   }
   
@@ -98,6 +132,20 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
     }
   }
   
+  /**
+   * List groups.
+   *
+   * @returns array with listing of groups.
+   */
+  public function ListAllGroups() {    
+    try {
+      return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * from groups'));
+    } catch(Exception $e) {
+      echo $e;
+      return null;
+    }
+  }
+  
   
   /**
    * Get user.
@@ -107,6 +155,21 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
   public function GetUser($id) {    
     try {
       return $this->db->ExecuteSelectQuery(self::SQL('get user by id'), array($id));
+    } catch(Exception $e) {
+      echo $e;
+      return null;
+    }
+  }
+  
+  
+  /**
+   * Get group.
+   *
+   * @returns array with listing of groups.
+   */
+  public function GetGroup($id) {    
+    try {
+      return $this->db->ExecuteSelectQuery(self::SQL('get group by id'), array($id));
     } catch(Exception $e) {
       echo $e;
       return null;

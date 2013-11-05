@@ -47,6 +47,8 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
       'get group memberships'   => 'SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;',
 	  'update profile'          => "UPDATE User SET name=?, email=?, updated=? WHERE id=?;",
       'update password'         => "UPDATE User SET algorithm=?, salt=?, password=?, updated=? WHERE id=?;",
+      'delete from user'        => "DELETE FROM user WHERE id=?;",
+      'delete u from user2groups'  => "DELETE FROM user2groups WHERE idUser=?;",
      );
     
 	if(!isset($queries[$key])) {
@@ -113,6 +115,18 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
       $this->AddMessage('error', "Failed to create user.");
       return false;
     }
+    return true;
+  }
+  
+  /**
+   * Delete user.
+   *
+   * @param $id int user id.
+   * @returns boolean true if success else false.
+   */
+  public function DeleteUser($id) {
+    $this->db->ExecuteQuery(self::SQL('delete u from user2groups'), array($id));
+    $this->db->ExecuteQuery(self::SQL('delete from user'), array($id));
     return true;
   }
 

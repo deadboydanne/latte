@@ -70,27 +70,55 @@ class CCAdminControlPanel extends CObject implements IController {
   
   
   /**
-   * View and edit user profile.
+   * View and edit groups.
    */
   public function Groups($id = null) {
-  	$users = new CMAdminControlPanel();
+  	$groups = new CMAdminControlPanel();
   	if(isset($id)) {
-    $form = new CFormUserProfile($this, $users->GetUser($id));
+    $form = new CFormGroupProfile($this, $groups->GetGroup($id));
     $form->Check();
-    $this->views->SetTitle('User Profile')
+    $this->views->SetTitle('Group Profile')
                 ->AddInclude(__DIR__ . '/editgroup.tpl.php', array(
                   'is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,
-                  'edituser' => $users->GetUser($id),
-                  'profile_form'=>$form->GetHTML(),
+                  'editgroup' => $groups->GetGroup($id),
+                  'group_form'=>$form->GetHTML(),
                 ))
                 ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
   	} else {
-    $this->views->SetTitle('User Profile')
+    $this->views->SetTitle('Group Profiles')
                 ->AddInclude(__DIR__ . '/groups.tpl.php', array(
                   'is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,
-                  'allusers' => $users->ListAllUsers(),
+                  'allgroups' => $groups->ListAllGroups(),
+                ))
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
+  }
+  }
+  
+  
+  /**
+   * View and edit content.
+   */
+  public function Content($id = null) {
+  	$groups = new CMAdminControlPanel();
+  	if(isset($id)) {
+    $form = new CFormGroupProfile($this, $groups->GetGroup($id));
+    $form->Check();
+    $this->views->SetTitle('Group Profile')
+                ->AddInclude(__DIR__ . '/editgroup.tpl.php', array(
+                  'is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,
+                  'editgroup' => $groups->GetGroup($id),
+                  'group_form'=>$form->GetHTML(),
+                ))
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
+  	} else {
+    $this->views->SetTitle('Group Profiles')
+                ->AddInclude(__DIR__ . '/groups.tpl.php', array(
+                  'is_authenticated'=>$this->user['isAuthenticated'], 
+                  'user'=>$this->user,
+                  'allgroups' => $groups->ListAllGroups(),
                 ))
                 ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
   }
@@ -149,7 +177,18 @@ class CCAdminControlPanel extends CObject implements IController {
   }
   
 
-/**
+  /**
+   * Save updates to group information.
+   */
+  public function DoGroupSave($form) {
+  	$this->editgroup = new CMAdminControlPanel();
+    $ret = $this->editgroup->SaveGroup($form['username']['value'], $form['name']['value'], $form['id']['value']);
+    $this->AddMessage($ret, 'Saved group.', 'Failed saving profile.');
+    $this->RedirectToController('groups/'.$form['id']['value']);
+  }
+  
+
+  /**
    * Create a new user.
    */
   public function Create() {
@@ -162,13 +201,28 @@ class CCAdminControlPanel extends CObject implements IController {
                 ->AddInclude(__DIR__ . '/create.tpl.php', array('form' => $form->GetHTML()), 'primary')
                 ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
   }
+  
+
+  /**
+   * Create a new user.
+   */
+  public function CreateGroup() {
+    $form = new CFormGroupCreate($this);
+    if($form->Check() === false) {
+      $this->AddMessage('notice', 'You must fill in all values.');
+      $this->RedirectToController('CreateGroup');
+    }
+    $this->views->SetTitle('Create group')
+                ->AddInclude(__DIR__ . '/creategroup.tpl.php', array('form' => $form->GetHTML()), 'primary')
+                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
+  }
 
   /**
    * Perform a creation of a user as callback on a submitted form.
    *
    * @param $form CForm the form that was submitted
    */
-  public function DoCreate($form) {    
+  public function DoCreate($form) {
     if($form['password']['value'] != $form['password1']['value'] || empty($form['password']['value']) || empty($form['password1']['value'])) {
       $this->AddMessage('error', 'Password does not match or is empty.');
       $this->RedirectToController('create');
@@ -182,6 +236,55 @@ class CCAdminControlPanel extends CObject implements IController {
     } else {
       $this->AddMessage('notice', "Failed to create an account.");
       $this->RedirectToController('create');
+    }
+  }
+  
+  /**
+   * Delete a user as callback on a submitted form.
+   *
+   * @param $form CForm the form that was submitted
+   */
+  public function DoDeleteUser($form) {
+    if($this->user->DeleteUser($form['id']['value'])) {
+      $this->AddMessage('success', "You have successfully deleted the user");
+      $this->RedirectToController('users');
+    } else {
+      $this->AddMessage('notice', "Failed to delete user.");
+      $this->RedirectToController('users');
+    }
+  }
+
+  /**
+   * Perform a creation of a group as callback on a submitted form.
+   *
+   * @param $form CForm the form that was submitted
+   */
+  public function DoCreateGroup($form) {   
+  	$acp = new CMAdminControlPanel();
+    if($acp->CreateGroup($form['username']['value'], 
+                           		$form['name']['value']
+						   		)) {
+      $this->AddMessage('success', "You have successfully created the group {$form['name']['value']}.");
+      $this->RedirectToController('groups');
+    } else {
+      $this->AddMessage('notice', "Failed to create an account.");
+      $this->RedirectToController('creategroup');
+    }
+  }
+
+  /**
+   * Delete a group as callback on a submitted form.
+   *
+   * @param $form CForm the form that was submitted
+   */
+  public function DoDeleteGroup($form) {   
+  	$acp = new CMAdminControlPanel();
+    if($acp->DeleteGroup($form['id']['value'])) {
+      $this->AddMessage('success', "You have successfully deleted the group");
+      $this->RedirectToController('groups');
+    } else {
+      $this->AddMessage('notice', "Failed to delete group.");
+      $this->RedirectToController('groups');
     }
   }
 
