@@ -67,19 +67,19 @@ I __config.php__ gör du alla inställningar som har med temat att göra. Arraye
 	  ),
 	);
 
-´$lt->config['theme']['path']´ innehåller sökvägen till ditt valda tema.
-´$lt->config['theme']['parent']´ är sökvägen till temat som ditt egna tema ärver ifrån.
-´$lt->config['theme']['name']´ är namnet på ditt föräldratema.
-´$lt->config['theme']['style']´ namnet på temats stilmall.
-´$lt->config['theme']['template_file']´ mallsidan, i de flesta fall index.tpl.php. Vill du använda någon annat på din mallsida anger du det här.
-´$lt->config['theme']['menu_to_region']´ vilken meny som ska kopplas till regionen __navbar__.
-´$lt->config['theme']['data']['header']´ rubriken på sidan.
-´$lt->config['theme']['data']['slogan']´ sidans slogan, kan användas av vissa teman.
-´$lt->config['theme']['data']['favicon']´ namn på sidans favicon, i det här fallet används samma fil som till logotypen.
-´$lt->config['theme']['data']['logo']´ sidans logotyp. Vill du byta ut så lägg din fil i site/themes/ditt valda tema och ange namnet här.
-´$lt->config['theme']['data']['logo_width']´ bredd på logotypen.
-´$lt->config['theme']['data']['logo_height']´ höjd på logotypen.
-´$lt->config['theme']['data']['footer']´ texten som visas längst ner på sidan.
+´\$lt->config['theme']['path']´ innehåller sökvägen till ditt valda tema.
+´\$lt->config['theme']['parent']´ är sökvägen till temat som ditt egna tema ärver ifrån.
+´\$lt->config['theme']['name']´ är namnet på ditt föräldratema.
+´\$lt->config['theme']['style']´ namnet på temats stilmall.
+´\$lt->config['theme']['template_file']´ mallsidan, i de flesta fall index.tpl.php. Vill du använda någon annat på din mallsida anger du det här.
+´\$lt->config['theme']['menu_to_region']´ vilken meny som ska kopplas till regionen __navbar__.
+´\$lt->config['theme']['data']['header']´ rubriken på sidan.
+´\$lt->config['theme']['data']['slogan']´ sidans slogan, kan användas av vissa teman.
+´\$lt->config['theme']['data']['favicon']´ namn på sidans favicon, i det här fallet används samma fil som till logotypen.
+´\$lt->config['theme']['data']['logo']´ sidans logotyp. Vill du byta ut så lägg din fil i site/themes/ditt valda tema och ange namnet här.
+´\$lt->config['theme']['data']['logo_width']´ bredd på logotypen.
+´\$lt->config['theme']['data']['logo_height']´ höjd på logotypen.
+´\$lt->config['theme']['data']['footer']´ texten som visas längst ner på sidan.
 
 
 ### Skapa en blogg ###
