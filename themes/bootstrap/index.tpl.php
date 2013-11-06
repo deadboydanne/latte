@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
   <meta charset='utf-8'/>
-  <title><?=$title?></title>
+  <title>Latte - <?=$title?></title>
 	<link rel='shortcut icon' href='<?=theme_url($favicon)?>'/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

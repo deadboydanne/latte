@@ -24,22 +24,6 @@ class CCAdminControlPanel extends CObject implements IController {
                 ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
   }
   
-
-  /**
-   * View and edit user profile.
-   */
-  public function Profile() {    
-    $form = new CFormUserProfile($this, $this->user);
-    $form->Check();
-
-    $this->views->SetTitle('User Profile')
-                ->AddInclude(__DIR__ . '/profile.tpl.php', array(
-                  'is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,
-                  'profile_form'=>$form->GetHTML(),
-                ));
-  }
-  
   
   /**
    * View and edit user profile.
@@ -47,7 +31,7 @@ class CCAdminControlPanel extends CObject implements IController {
   public function Users($id = null) {
   	$users = new CMAdminControlPanel();
   	if(isset($id)) {
-    $form = new CFormUserProfile($this, $users->GetUser($id));
+    $form = new CFormAdminUserProfile($this, $users->GetUser($id));
     $form->Check();
     $this->views->SetTitle('User Profile')
                 ->AddInclude(__DIR__ . '/edituser.tpl.php', array(

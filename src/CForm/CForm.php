@@ -189,6 +189,36 @@ class CFormElementPassword extends CFormElement {
 }
 
 
+class CFormElementCheckbox extends CFormElement {
+  /**
+   * Constructor
+   *
+   * @param string name of the element.
+   * @param array attributes to set to the element. Default is an empty array.
+   */
+  public function __construct($name, $attributes=array()) {
+    parent::__construct($name, $attributes);
+    $this['type']     = 'checkbox';
+    $this['checked']  = isset($attributes['checked']) ? $attributes['checked'] : false;
+    $this['value']    = isset($attributes['value']) ? $attributes['value'] : $name;
+  }
+}
+
+
+class CFormElementCheckboxMultiple extends CFormElement {
+  /**
+   * Constructor
+   *
+   * @param string name of the element.
+   * @param array attributes to set to the element. Default is an empty array.
+   */
+  public function __construct($name, $attributes=array()) {
+    parent::__construct($name, $attributes);
+    $this['type'] = 'checkbox-multiple';
+  }
+}
+
+
 class CFormElementSubmit extends CFormElement {
   /**
    * Constructor

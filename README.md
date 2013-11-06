@@ -40,7 +40,46 @@ Här följer lite exempel på vad du kan göra:
 
 ### Ändra logo, webbplatsens titel, footer och navigeringsmeny ###
 
-Latte är enkelt att anpassa precis som man vill ha det. Vi utgår 
+Latte är enkelt att anpassa precis som man vill ha det. Du kan skapa egna teman som baseras på ett grundtema, till exempel Twitter Bootstrap. Detta gör du genom att skapa en ny mapp i __site/themes__ med namnet på temat. Här lägger du css-filer och bilder. Du kan också lägga in en egen version av temats template-fil. Detta gör du genom att kopiera index.tpl.php från temat du vill utöka och klistrar in den i ditt egna tema. Det rekommenderas dock att du inte gör några förändringar här om du inte vet hur temat är uppbyggt eftersom du då kan få konstiga fel.
+
+I __config.php__ gör du alla inställningar som har med temat att göra. Arrayen ´$lt->config['theme']´ håller reda på alla inställningar. Så här ser det ut i config.php:
+
+	/**
+	 * Settings for the theme.
+	 */
+	$lt->config['theme'] = array(
+	  // The name of the theme in the theme directory
+	  'path'    => 'site/themes/cloudtheme',
+	  'parent'          => 'themes/bootstrap',
+	  'name'    => 'bootstrap', 
+	  'stylesheet'  => 'style.css',
+	  'template_file'   => 'index.tpl.php',
+	  'menu_to_region' => array('fresh-install'=>'navbar'),
+	// Add static entries for use in the template file. 
+	  'data' => array(
+	    'header' => 'Latte',
+	    'slogan' => 'A PHP-based MVC-inspired CMF',
+	    'favicon' => 'logo_80x80.png',
+	    'logo' => 'logo_80x80.png',
+	    'logo_width'  => 80,
+	    'logo_height' => 80,
+	    'footer' => '<p>Latte &copy; by Andreas Carlsson (andreasc89@gmail.com)</p>',
+	  ),
+	);
+
+´$lt->config['theme']['path']´ innehåller sökvägen till ditt valda tema.
+´$lt->config['theme']['parent']´ är sökvägen till temat som ditt egna tema ärver ifrån.
+´$lt->config['theme']['name']´ är namnet på ditt föräldratema.
+´$lt->config['theme']['style']´ namnet på temats stilmall.
+´$lt->config['theme']['template_file']´ mallsidan, i de flesta fall index.tpl.php. Vill du använda någon annat på din mallsida anger du det här.
+´$lt->config['theme']['menu_to_region']´ vilken meny som ska kopplas till regionen __navbar__.
+´$lt->config['theme']['data']['header']´ rubriken på sidan.
+´$lt->config['theme']['data']['slogan']´ sidans slogan, kan användas av vissa teman.
+´$lt->config['theme']['data']['favicon']´ namn på sidans favicon, i det här fallet används samma fil som till logotypen.
+´$lt->config['theme']['data']['logo']´ sidans logotyp. Vill du byta ut så lägg din fil i site/themes/ditt valda tema och ange namnet här.
+´$lt->config['theme']['data']['logo_width']´ bredd på logotypen.
+´$lt->config['theme']['data']['logo_height']´ höjd på logotypen.
+´$lt->config['theme']['data']['footer']´ texten som visas längst ner på sidan.
 
 
 ### Skapa en blogg ###
