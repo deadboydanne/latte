@@ -42,7 +42,7 @@ Här följer lite exempel på vad du kan göra:
 
 Latte är enkelt att anpassa precis som man vill ha det. Du kan skapa egna teman som baseras på ett grundtema, till exempel Twitter Bootstrap. Detta gör du genom att skapa en ny mapp i __site/themes__ med namnet på temat. Här lägger du css-filer och bilder. Du kan också lägga in en egen version av temats template-fil. Detta gör du genom att kopiera index.tpl.php från temat du vill utöka och klistrar in den i ditt egna tema. Det rekommenderas dock att du inte gör några förändringar här om du inte vet hur temat är uppbyggt eftersom du då kan få konstiga fel.
 
-I __config.php__ gör du alla inställningar som har med temat att göra. Arrayen ´$lt->config['theme']´ håller reda på alla inställningar. Så här ser det ut i config.php:
+I __config.php__ gör du alla inställningar som har med temat att göra. Arrayen `$lt->config['theme']` håller reda på alla inställningar. Så här ser det ut i config.php:
 
 	/**
 	 * Settings for the theme.
@@ -125,7 +125,7 @@ Gör en ny fil som du kallar för __blog.tpl.php__, detta är vyn som visar sjä
 	  <p>No posts exists.</p>
 	<?php endif;?>
 
-För att bloggen ska gå att nå måste du lägga till den i ´$lt->config['controllers']´. Gör en ny rad och lägg till följande i arrayen:
+För att bloggen ska gå att nå måste du lägga till den i `$lt->config['controllers']`. Gör en ny rad och lägg till följande i arrayen:
 
 	'myblog' => array('enabled' => true,'class' => 'CCMyBlog'),
 
