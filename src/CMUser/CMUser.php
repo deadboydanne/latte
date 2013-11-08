@@ -177,7 +177,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
     $this->session->AddMessage('success', "You have logged out.");
   }
   
-/**
+  /**
    * Save user profile to database and update user profile in session.
    *
    * @returns boolean true if success else false.

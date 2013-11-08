@@ -67,24 +67,69 @@ I __config.php__ gör du alla inställningar som har med temat att göra. Arraye
 	  ),
 	);
 
-´\$lt->config['theme']['path']´ innehåller sökvägen till ditt valda tema.
-´\$lt->config['theme']['parent']´ är sökvägen till temat som ditt egna tema ärver ifrån.
-´\$lt->config['theme']['name']´ är namnet på ditt föräldratema.
-´\$lt->config['theme']['style']´ namnet på temats stilmall.
-´\$lt->config['theme']['template_file']´ mallsidan, i de flesta fall index.tpl.php. Vill du använda någon annat på din mallsida anger du det här.
-´\$lt->config['theme']['menu_to_region']´ vilken meny som ska kopplas till regionen __navbar__.
-´\$lt->config['theme']['data']['header']´ rubriken på sidan.
-´\$lt->config['theme']['data']['slogan']´ sidans slogan, kan användas av vissa teman.
-´\$lt->config['theme']['data']['favicon']´ namn på sidans favicon, i det här fallet används samma fil som till logotypen.
-´\$lt->config['theme']['data']['logo']´ sidans logotyp. Vill du byta ut så lägg din fil i site/themes/ditt valda tema och ange namnet här.
-´\$lt->config['theme']['data']['logo_width']´ bredd på logotypen.
-´\$lt->config['theme']['data']['logo_height']´ höjd på logotypen.
-´\$lt->config['theme']['data']['footer']´ texten som visas längst ner på sidan.
+* __$lt->config['theme']['path']__ innehåller sökvägen till ditt valda tema.
+* __$lt->config['theme']['parent']__ är sökvägen till temat som ditt egna tema ärver ifrån.
+* __$lt->config['theme']['name']__ är namnet på ditt föräldratema.
+* __$lt->config['theme']['style']__ namnet på temats stilmall.
+* __$lt->config['theme']['template_file']__ mallsidan, i de flesta fall index.tpl.php. Vill du använda någon annat på din mallsida anger du det här.
+* __$lt->config['theme']['menu_to_region']__ vilken meny som ska kopplas till regionen __navbar__.
+* __$lt->config['theme']['data']['header']__ rubriken på sidan.
+* __$lt->config['theme']['data']['slogan']__ sidans slogan, kan användas av vissa teman.
+* __$lt->config['theme']['data']['favicon']__ namn på sidans favicon, i det här fallet används samma fil som till logotypen.
+* __$lt->config['theme']['data']['logo']__ sidans logotyp. Vill du byta ut så lägg din fil i site/themes/ditt valda tema och ange namnet här.
+* __$lt->config['theme']['data']['logo_width']__ bredd på logotypen.
+* __$lt->config['theme']['data']['logo_height']__ höjd på logotypen.
+* __$lt->config['theme']['data']['footer']__ texten som visas längst ner på sidan.
 
 
 ### Skapa en blogg ###
 
-asdf
+När du installerar ramverket finns redan en exempel-kontroller för blog, gästbok och sida med i paketet. Den ligger i mappen __site/src/CCMycontroller__. Jag tänkte även visa hur du skapar en ny kontroller för en blogg. Börja med att göra en mapp i __site/src__, vi kan kalla den för CCMyBlog. I mappen gör skapar du en phpfil med samma namn och skriver följande:
+
+	<?php
+	/**
+	 * Sample controller for creating a blog.
+	 */
+	class CCMyBlog extends CObject implements IController {
+	
+	  /**
+	   * Constructor
+	   */
+	  public function __construct() { parent::__construct(); }
+	
+	  /**
+	   * The is an example blog
+	   */
+	  public function Index() {
+	    $content = new CMContent();
+	    $this->views->SetTitle('My blog'.htmlEnt($content['title']))
+	                ->AddInclude(__DIR__ . '/blog.tpl.php', array(
+	                  'contents' => $content->ListAll(array('type'=>'post', 'order-by'=>'title', 'order-order'=>'DESC')),
+	                ));
+	  }
+	}
+
+Gör en ny fil som du kallar för __blog.tpl.php__, detta är vyn som visar själva bloggen. Den filen kan se ut till exempel så här:
+
+	<h1>My beautiful blog</h1>
+	<p>This is my example blog built using Latte.</p>
+	
+	<?php if($contents != null):?>
+	  <?php foreach($contents as $val):?>
+	    <h2><?=esc($val['title'])?></h2>
+	    <p class='smaller-text'><em>Posted on <?=$val['created']?> by <?=$val['owner']?></em></p>
+	    <p><?=filter_data($val['data'], $val['filter'])?></p>
+	    <p class='smaller-text silent'><a href='<?=create_url("content/edit/{$val['id']}")?>'>edit</a></p>
+	  <?php endforeach; ?>
+	<?php else:?>
+	  <p>No posts exists.</p>
+	<?php endif;?>
+
+För att bloggen ska gå att nå måste du lägga till den i ´$lt->config['controllers']´. Gör en ny rad och lägg till följande i arrayen:
+
+	'myblog' => array('enabled' => true,'class' => 'CCMyBlog'),
+
+Färdigt! Gå till installation av Latte och skriv /myblog på slutet så kommer ska du se din färdiga blogg.
 
 
 ### Skapa en sida ###

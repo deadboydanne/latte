@@ -43,6 +43,7 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
 	  'update group'            => "UPDATE Groups SET username=?, name=? WHERE id=?;",
 	  'delete from groups'      => "DELETE FROM Groups WHERE id=?;",
 	  'delete g from user2groups' => "DELETE FROM User2Groups WHERE idGroups=?;",
+      'delete u from user2groups' => "DELETE FROM user2groups WHERE idUser=?;",
      );
     
 	if(!isset($queries[$key])) {
@@ -103,8 +104,10 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
    *
    * @returns boolean true if success else false.
    */
-  public function Save($name, $email, $id) {
+  public function Save($name, $email, $id, $groups) {
     $this->db->ExecuteQuery(self::SQL('update profile'), array($name, $email, date('Y-m-d H:i:s'), $id));
+    $this->db->ExecuteQuery(self::SQL('delete u from user2groups'), array($id));
+    print_r($groups);
     return $this->db->RowCount() === 1;
   }
   
@@ -155,6 +158,20 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
   public function GetUser($id) {    
     try {
       return $this->db->ExecuteSelectQuery(self::SQL('get user by id'), array($id));
+    } catch(Exception $e) {
+      echo $e;
+      return null;
+    }
+  }
+  
+  /**
+   * Get user membershups
+   *
+   * @returns array with listing of which group a user belongs to.
+   */
+  public function GetGroupMemberships($id) {    
+    try {
+      return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get group memberships'), array($id));
     } catch(Exception $e) {
       echo $e;
       return null;

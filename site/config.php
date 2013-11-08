@@ -140,7 +140,7 @@ $lt->config['controllers'] = array(
   'theme' => array('enabled' => true,'class' => 'CCTheme'),
   'module' => array('enabled' => true,'class' => 'CCModules'),
   'setup' => array('enabled' => true,'class' => 'CCSetup'),
-  'my'        => array('enabled' => true,'class' => 'CCMycontroller'),
+  'my' => array('enabled' => true,'class' => 'CCMycontroller'),
 );
 
 /**

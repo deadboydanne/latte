@@ -31,8 +31,11 @@ class CCAdminControlPanel extends CObject implements IController {
   public function Users($id = null) {
   	$users = new CMAdminControlPanel();
   	if(isset($id)) {
-    $form = new CFormAdminUserProfile($this, $users->GetUser($id));
+    $allgroups = $users->ListAllGroups();	
+    $memberships = $users->GetGroupMemberships($id);
+    $form = new CFormAdminUserProfile($this, $users->GetUser($id), $allgroups, $memberships);
     $form->Check();
+
     $this->views->SetTitle('User Profile')
                 ->AddInclude(__DIR__ . '/edituser.tpl.php', array(
                   'is_authenticated'=>$this->user['isAuthenticated'], 
@@ -155,7 +158,7 @@ class CCAdminControlPanel extends CObject implements IController {
    */
   public function DoProfileSave($form) {
   	$this->edituser = new CMAdminControlPanel();
-    $ret = $this->edituser->Save($form['name']['value'], $form['email']['value'], $form['id']['value']);
+    $ret = $this->edituser->Save($form['name']['value'], $form['email']['value'], $form['id']['value'], $form['groups']);
     $this->AddMessage($ret, 'Saved profile.', 'Failed saving profile.');
     $this->RedirectToController('users/'.$form['id']['value']);
   }
