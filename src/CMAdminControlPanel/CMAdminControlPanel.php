@@ -32,12 +32,13 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
   public static function SQL($key=null) {
     $queries = array(
       'insert into group'       => 'INSERT INTO Groups (username,name,created) VALUES (?,?,?);',
-      'insert into user2group'  => 'INSERT INTO User2Groups (idUser,idGroups,created) VALUES (?,?,?);',
+      'insert into user2groups' => 'INSERT INTO User2Groups (idUser,idGroups,created) VALUES (?,?,?);',
       'check user password'     => 'SELECT * FROM User WHERE (username=? OR email=?);',
       'select * from users'     => 'SELECT * FROM User;',
       'select * from groups'    => 'SELECT * FROM Groups;',
       'get user by id'          => 'SELECT * FROM User WHERE (id=?);',
       'get group by id'         => 'SELECT * FROM Groups WHERE (id=?);',
+      'get group by username'   => 'SELECT * FROM Groups WHERE username=?;',
       'get group memberships'   => 'SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;',
 	  'update profile'          => "UPDATE User SET name=?, email=?, updated=? WHERE id=?;",
 	  'update group'            => "UPDATE Groups SET username=?, name=? WHERE id=?;",
@@ -107,7 +108,11 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess {
   public function Save($name, $email, $id, $groups) {
     $this->db->ExecuteQuery(self::SQL('update profile'), array($name, $email, date('Y-m-d H:i:s'), $id));
     $this->db->ExecuteQuery(self::SQL('delete u from user2groups'), array($id));
-    print_r($groups);
+    foreach($groups->attributes['checked'] as $grupp) {
+	   $gruppen = $this->db->ExecuteSelectQuery(self::SQL('get group by username'), array($grupp));
+	   $idGroups = $gruppen['id'];
+	   $this->db->ExecuteQuery(self::SQL('insert into user2groups'), array($id, $idGroups, date('Y-m-d H:i:s')));
+    }
     return $this->db->RowCount() === 1;
   }
   

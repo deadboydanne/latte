@@ -88,27 +88,16 @@ class CCAdminControlPanel extends CObject implements IController {
    * View and edit content.
    */
   public function Content($id = null) {
+    $contents = new CMContent();
   	$groups = new CMAdminControlPanel();
-  	if(isset($id)) {
-    $form = new CFormGroupProfile($this, $groups->GetGroup($id));
-    $form->Check();
-    $this->views->SetTitle('Group Profile')
-                ->AddInclude(__DIR__ . '/editgroup.tpl.php', array(
-                  'is_authenticated'=>$this->user['isAuthenticated'], 
-                  'user'=>$this->user,
-                  'editgroup' => $groups->GetGroup($id),
-                  'group_form'=>$form->GetHTML(),
-                ))
-                ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
-  	} else {
     $this->views->SetTitle('Group Profiles')
-                ->AddInclude(__DIR__ . '/groups.tpl.php', array(
+                ->AddInclude(__DIR__ . '/content.tpl.php', array(
                   'is_authenticated'=>$this->user['isAuthenticated'], 
                   'user'=>$this->user,
                   'allgroups' => $groups->ListAllGroups(),
+                  'contents' => $contents->ListAll(),
                 ))
                 ->AddInclude(__DIR__ . '/sidebar.tpl.php', array('is_authenticated'=>$this->user['isAuthenticated'],'user'=>$this->user), 'sidebar');
-  }
   }
   
   

@@ -8,7 +8,7 @@ Baserat på ramverket Lydia av Mikael Roos, lärare på BTH.
 Specifikationer
 ---------------
 
-* PHP, minst version 5.0
+* PHP, minst version 5.2.4
 * MySQL-databas
 * Katalogen site/src ska ha rättigheter 777
 

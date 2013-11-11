@@ -1,4 +1,4 @@
-<h1>User Profiles</h1>
+<h1>Manage users</h1>
 <p>You can view and update all user profiles in the database.</p>
 
 <?php if($is_authenticated && $user['hasRoleAdmin']): ?>

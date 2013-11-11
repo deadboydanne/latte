@@ -9,8 +9,8 @@ class CServerStatus extends CObject {
 	public static function PHPVersion() {
 	
 	$phpversion = phpversion();
-	if($phpversion <= 5) {
-		return array(false,'<div class="error">This server is running version '.$phpversion.' of PHP. That is an outdated version, please update to continue the installation process.</div>');
+	if($phpversion <= '5.2.4') {
+		return array(false,'<div class="error">This server is running version '.$phpversion.' of PHP. That is an outdated version, please update to continue the installation process. The oldest allowed version of PHP is 5.2.4</div>');
 	} else {
 		return array(true,'<div class="success">WOHO! This server is running version '.$phpversion.' of PHP. That\'s a perfectly good version!</div>');
 	}

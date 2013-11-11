@@ -1,5 +1,5 @@
-<h1>Content Controller Index</h1>
-<p>One controller to manage the actions for content, mainly list, create, edit, delete, view.</p>
+<h1>Manage content</h1>
+<p>One controller to manage viewing permissions for content.</p>
 
 <h2>All content</h2>
 <?php if($contents != null):?>
@@ -11,9 +11,3 @@
 <?php else:?>
   <p>No content exists.</p>
 <?php endif;?>
-
-<h2>Actions</h2>
-<ul>
-  <li><a href='<?=create_url('content/manage')?>'>Init database, create tables and sample content</a>
-  <li><a href='<?=create_url('content/create')?>'>Create new content</a>
-</ul>
