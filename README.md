@@ -34,7 +34,7 @@ Användning
 
 När ramverket är installerat och klart kan du klicka på Logga in längst upp till höger. Användarnamnet för administratörskontot är __root__ och lösenordet __root__. Det finns också en användare som utan administratörsrättigheter som bara tillhör gruppen user. Den här kan du logga in som med användarnamn __user__ och lösenord __user__.
 
-I index-kontrollern listas alla kontrollers och deras metoder i vänsterspalten. Det finns också en inbyggd dokumentation i ramverket som ligger i kontroller ´module´. Här listas alla moduler i vänsterspalten, klicka på respektive modul för att läsa mer om den.
+I index-kontrollern listas alla kontrollers och deras metoder i vänsterspalten. Det finns också en inbyggd dokumentation i ramverket som ligger i kontroller `module`. Här listas alla moduler i vänsterspalten, klicka på respektive modul för att läsa mer om den.
 
 Här följer lite exempel på vad du kan göra:
 
@@ -134,7 +134,7 @@ Färdigt! Gå till installation av Latte och skriv /myblog på slutet så kommer
 
 ### Skapa en sida ###
 
-En sida skapar du enkelt genom att gå till kontrollern ´content/create´. Det finns även en länk högst upp på sidan som går direkt till ´content´-kontrollern. Här fyller du i titel, länktext, innehåll, typ och filter. En kort förklaring till vad dessa innebär:
+En sida skapar du enkelt genom att gå till kontrollern `content/create`. Det finns även en länk högst upp på sidan som går direkt till `content`-kontrollern. Här fyller du i titel, länktext, innehåll, typ och filter. En kort förklaring till vad dessa innebär:
 
 * __Title:__ Titel och rubrik på sidan
 * __Linktext:__ En enkel länktext till sidan. Får innehålla gemener, siffror och bindestreck. Inga å, ä, ö.
