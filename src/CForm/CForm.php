@@ -22,8 +22,6 @@ class CFormElement implements ArrayAccess {
   public function __construct($name, $attributes=array()) {
     $this->attributes = $attributes;    
     $this['name'] = $name;
-    //$this['key'] = $name;
-    //$this['name'] = isset($this['name']) ? $this['name'] : $name;
 
     if(is_callable('CLatte::Instance()')) {
       $this->characterEncoding = CLatte::Instance()->config['character_encoding'];

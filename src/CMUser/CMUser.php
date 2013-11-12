@@ -154,7 +154,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
     if($user) {
       $user['isAuthenticated'] = true;
       $user['groups'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get group memberships'), array($user['id']));
-      $user['accesslevel'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get access level'), array($user['id']));
+      $user['accesslevel'] = $this->db->ExecuteSelectQuery(self::SQL('get access level'), array($user['id']));
       foreach($user['groups'] as $val) {
         if($val['id'] == 1) {
           $user['hasRoleAdmin'] = true;
