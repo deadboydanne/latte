@@ -3,9 +3,9 @@
 
 <h2>All content</h2>
 <?php if($gallerycontent != null):?>
-  <ul>
+  <ul class=inline>
   <?php foreach($gallerycontent as $val):?>
-    <li><img src="site/data/<?=$val['id']?>.jpg" alt="<?=$val['title']?>"><br><?=$val['id']?>, <?=$val['title']?> by <?=$val['owner']?> <a href='<?=create_url("gallery/edit/{$val['id']}")?>'>edit</a> <a href='<?=create_url("gallery/view/{$val['id']}")?>'>view</a>
+    <li style="padding-bottom: 50px;"><img src="site/data/<?=$val['id']?>.jpg" alt="<?=$val['title']?>"><br><?=$val['id']?>, <?=$val['title']?>, uploaded by <?=$val['owner']?> <a href='<?=create_url("gallery/edit/{$val['id']}")?>'>edit</a>
   <?php endforeach; ?>
   </ul>
 <?php else:?>

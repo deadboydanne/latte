@@ -73,7 +73,10 @@ class CMGallery extends CObject implements IHasSQL, ArrayAccess, IModule {
         try {
 	      $this->db->ExecuteQuery(self::SQL('drop table gallery'));
 	      $this->db->ExecuteQuery(self::SQL('create table gallery'));
-	      $this->db->ExecuteQuery(self::SQL('insert content'), array('En första bild', 'Här står en beskrivande text om bilden', $user_id, date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Högakustenbron', 'En stor bra långt upp i Sverige.', $user_id, date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Grönt träd', 'Ett grönt träd på den irländska landsbygden.', $user_id, date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Molnig himmel', 'En molnig himmel i augusti.', $user_id, date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Norrsken', 'En kall natt i Abisko.', $user_id, date('Y-m-d H:i:s')));
 	      return array('success', 'Successfully created the database table for the gallery.');
         } catch(Exception$e) {
           die("$e<br/>Failed to open database: " . $this->config['database'][$this->config['database']['type']]['dsn']);
@@ -98,7 +101,7 @@ class CMGallery extends CObject implements IHasSQL, ArrayAccess, IModule {
       $this->db->ExecuteQuery(self::SQL('update content'), array($this['title'], $this['text'], date('Y-m-d H:i:s'), $this['id']));
       $msg = 'updated';
     } else {
-      $this->db->ExecuteQuery(self::SQL('insert content'), array($this['filter'], $this['accesslevel'], $this['linktext'], $this['type'], $this['title'], $this['data'], $this->user['id'], date('Y-m-d H:i:s')));
+      $this->db->ExecuteQuery(self::SQL('insert content'), array($this['title'], $this['text'], $this->user['id'], date('Y-m-d H:i:s')));
       $this['id'] = $this->db->LastInsertId();
       $msg = 'created';
     }

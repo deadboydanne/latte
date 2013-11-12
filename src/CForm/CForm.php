@@ -56,6 +56,7 @@ class CFormElement implements ArrayAccess {
       'checkbox'          => 'CFormElementCheckbox',
       'checkbox-multiple' => 'CFormElementCheckboxMultiple',
       'select'            => 'CFormElementSelect',
+      'file'              => 'CFormElementFile',
       'search'            => 'CFormElementSearch',
       'submit'            => 'CFormElementSubmit',
     );

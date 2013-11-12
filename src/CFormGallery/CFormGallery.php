@@ -20,8 +20,9 @@ class CFormGallery extends CForm {
     
     $save = isset($gallery['id']) ? 'save' : 'create';
     $this->AddElement(new CFormElementHidden('id', array('value'=>$gallery['id'])))
+         ->AddElement(new CFormElementFile('file', array('class'=>'input-width-500')))
          ->AddElement(new CFormElementText('title', array('value'=>$gallery['title'],'class'=>'input-width-500')))
-         ->AddElement(new CFormElementTextarea('text', array('label'=>'gallery:', 'value'=>$gallery['text'],'class'=>'input-width-500 input-height-300')))
+         ->AddElement(new CFormElementTextarea('text', array('label'=>'Text:', 'value'=>$gallery['text'],'class'=>'input-width-500 input-height-300')))
          ->AddElement(new CFormElementSubmit($save, array('callback'=>array($this, 'DoSave'), 'callback-args'=>array($gallery))))
          ->AddElement(new CFormElementSubmit('delete', array('callback'=>array($this, 'DoDelete'), 'callback-args'=>array($gallery))));
 
