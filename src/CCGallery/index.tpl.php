@@ -1,19 +1,19 @@
-<h1>Content Controller Index</h1>
-<p>One controller to manage the actions for content, mainly list, create, edit, delete, view.</p>
+<h1>Gallery Controller Index</h1>
+<p>One controller to manage the gallery.</p>
 
 <h2>All content</h2>
-<?php if($contents != null):?>
+<?php if($gallerycontent != null):?>
   <ul>
-  <?php foreach($contents as $val):?>
-    <li><?=$val['id']?>, <?=$val['title']?> by <?=$val['owner']?> <a href='<?=create_url("content/edit/{$val['id']}")?>'>edit</a> <a href='<?=create_url("page/view/{$val['id']}")?>'>view</a>
+  <?php foreach($gallerycontent as $val):?>
+    <li><img src="site/data/<?=$val['id']?>.jpg" alt="<?=$val['title']?>"><br><?=$val['id']?>, <?=$val['title']?> by <?=$val['owner']?> <a href='<?=create_url("gallery/edit/{$val['id']}")?>'>edit</a> <a href='<?=create_url("gallery/view/{$val['id']}")?>'>view</a>
   <?php endforeach; ?>
   </ul>
 <?php else:?>
-  <p>No content exists.</p>
+  <p>No content in gallery.</p>
 <?php endif;?>
 
 <h2>Actions</h2>
 <ul>
-  <li><a href='<?=create_url('content/manage')?>'>Init database, create tables and sample content</a>
-  <li><a href='<?=create_url('content/create')?>'>Create new content</a>
+  <li><a href='<?=create_url('gallery/manage')?>'>Init database, create gallery table</a>
+  <li><a href='<?=create_url('gallery/create')?>'>Create new content</a>
 </ul>

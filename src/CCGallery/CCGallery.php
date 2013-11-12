@@ -4,7 +4,7 @@
 * 
 * @package LatteCore
 */
-class CCContent extends CObject implements IController {
+class CCGallery extends CObject implements IController {
 
 
   /**
@@ -19,10 +19,10 @@ class CCContent extends CObject implements IController {
    * Show a listing of all content.
    */
   public function Index() {
-    $content = new CMContent();
+    $gallerycontent = new CMGallery();
     $this->views->SetTitle('Content Controller')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
-                  'contents' => $content->ListAll($args=null, $this->user['accesslevel']['id']),
+                  'gallerycontent' => $gallerycontent->ListAll(),
                 ));
   }
   
@@ -33,30 +33,28 @@ class CCContent extends CObject implements IController {
    * @param id integer the id of the content.
    */
   public function Edit($id=null) {
-    $content = new CMContent($id);
-  	$groups = new CMAdminControlPanel();
-  	$allgroups = $groups->ListAllGroups();
-    $form = new CFormContent($content,$allgroups);
+    $gallery = new CMGallery($id);
+    $form = new CFormGallery($gallery);
     $status = $form->Check();
     if($status === false) {
       $this->AddMessage('notice', 'The form could not be processed.');
       $this->RedirectToController('edit', $id);
     } else if($status === true) {
-      $this->RedirectToController('edit', $content['id']);
+      $this->RedirectToController('edit', $gallery['id']);
     }
     
     $title = isset($id) ? 'Edit' : 'Create';
-    $this->views->SetTitle("$title content: $id")
+    $this->views->SetTitle("$title gallery: $id")
                 ->AddInclude(__DIR__ . '/edit.tpl.php', array(
                   'user'=>$this->user, 
-                  'content'=>$content, 
+                  'gallery'=>$gallery, 
                   'form'=>$form,
                 ));
   }
   
 
   /**
-   * Create new content.
+   * Create new content in gallery.
    */
   public function Create() {
     $this->Edit();
@@ -67,7 +65,7 @@ class CCContent extends CObject implements IController {
    * Init the content database.
    */
   public function Manage() {
-    $content = new CMContent();
+    $content = new CMGallery();
     $content->Manage('install');
     $this->RedirectToController();
   }
