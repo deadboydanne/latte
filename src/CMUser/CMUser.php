@@ -45,6 +45,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
       'insert into user2group'  => 'INSERT INTO User2Groups (idUser,idGroups,created) VALUES (?,?,?);',
       'check user password'     => 'SELECT * FROM User WHERE (username=? OR email=?);',
       'get group memberships'   => 'SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;',
+      'get access level'        => 'SELECT id FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=? ORDER BY ug.idGroups LIMIT 1;',
 	  'update profile'          => "UPDATE User SET name=?, email=?, updated=? WHERE id=?;",
       'update password'         => "UPDATE User SET algorithm=?, salt=?, password=?, updated=? WHERE id=?;",
       'delete from user'        => "DELETE FROM user WHERE id=?;",
@@ -153,6 +154,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
     if($user) {
       $user['isAuthenticated'] = true;
       $user['groups'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get group memberships'), array($user['id']));
+      $user['accesslevel'] = $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get access level'), array($user['id']));
       foreach($user['groups'] as $val) {
         if($val['id'] == 1) {
           $user['hasRoleAdmin'] = true;

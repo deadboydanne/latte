@@ -22,7 +22,7 @@ class CCContent extends CObject implements IController {
     $content = new CMContent();
     $this->views->SetTitle('Content Controller')
                 ->AddInclude(__DIR__ . '/index.tpl.php', array(
-                  'contents' => $content->ListAll(),
+                  'contents' => $content->ListAll($args=null, $this->user['accesslevel'][0]['id']),
                 ));
   }
   
@@ -34,7 +34,9 @@ class CCContent extends CObject implements IController {
    */
   public function Edit($id=null) {
     $content = new CMContent($id);
-    $form = new CFormContent($content);
+  	$groups = new CMAdminControlPanel();
+  	$allgroups = $groups->ListAllGroups();
+    $form = new CFormContent($content,$allgroups);
     $status = $form->Check();
     if($status === false) {
       $this->AddMessage('notice', 'The form could not be processed.');
@@ -64,9 +66,9 @@ class CCContent extends CObject implements IController {
   /**
    * Init the content database.
    */
-  public function Init() {
+  public function Manage() {
     $content = new CMContent();
-    $content->Init();
+    $content->Manage('install');
     $this->RedirectToController();
   }
   
