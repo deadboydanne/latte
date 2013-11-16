@@ -5,7 +5,7 @@
 <?php if($gallerycontent != null):?>
   <ul class=inline>
   <?php foreach($gallerycontent as $val):?>
-    <li style="padding-bottom: 50px;"><img src="site/data/<?=$val['id']?>.jpg" alt="<?=$val['title']?>"><br><?=$val['id']?>, <?=$val['title']?>, uploaded by <?=$val['owner']?> <a href='<?=create_url("gallery/edit/{$val['id']}")?>'>edit</a>
+    <li style="padding-bottom: 50px;"><img src="site/data/<?=$val['id']?>.jpg" alt="<?=$val['title']?>"><br><?=$val['id']?>, <?=$val['title']?>, by <?=$val['owner']?> <a href='<?=create_url("gallery/edit/{$val['id']}")?>'>edit</a>
   <?php endforeach; ?>
   </ul>
 <?php else:?>

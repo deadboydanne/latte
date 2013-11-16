@@ -54,7 +54,8 @@ class CFormGallery extends CForm {
     $gallery['title'] = $form['title']['value'];
     $gallery['text']  = $form['text']['value'];
     $gallery['options']  = $form['options'];
-    return $gallery->Save();
+    $gallery->Save();
+    CLatte::Instance()->RedirectTo('gallery');
   }
 
 

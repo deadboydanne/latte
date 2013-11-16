@@ -104,7 +104,7 @@ class CMGallery extends CObject implements IHasSQL, ArrayAccess, IModule {
     if($this['id']) {
       $this->db->ExecuteQuery(self::SQL('update content'), array($this['title'], $this['text'], date('Y-m-d H:i:s'), $this['id']));
     
-	  $img = WideImage::load('site/data'.$this['id'].'.jpg');
+	  $img = WideImage::load('site/data/'.$this['id'].'.jpg');
 	  
       
       foreach((array)$this['options']['checked'] as $option) {

@@ -81,6 +81,35 @@ I __config.php__ gör du alla inställningar som har med temat att göra. Arraye
 * __$lt->config['theme']['data']['logo_height']__ höjd på logotypen.
 * __$lt->config['theme']['data']['footer']__ texten som visas längst ner på sidan.
 
+Navigeringsmenyn ligger också tillgänglig i __config.php__. Man kan definera flera olika menyer och sedan välja vilken man vill använda. Koden för att göra en meny ser ut enligt följande:
+
+	/**
+	 * Define menus.
+	 *
+	 * Create hardcoded menus and map them to a theme region through $lt->config['theme'].
+	 */
+	$lt->config['menus'] = array(
+	  'fresh-install' => array(
+	    'home'      => array('label'=>'Home', 'url'=>'home'),
+	    'modules'   => array('label'=>'Modules', 'url'=>'module'),
+	    'content'   => array('label'=>'Content', 'url'=>'content'),
+	    'gallery'   => array('label'=>'Gallery', 'url'=>'gallery'),
+	    'guestbook' => array('label'=>'Guestbook', 'url'=>'guestbook'),
+	    'blog'      => array('label'=>'Blog', 'url'=>'blog'),
+	    'setup'     => array('label'=>'Setup', 'url'=>'setup'),
+	    'acp'       => array('label'=>'Admin Control Panel', 'url'=>'acp'),
+	  ),
+	  'example-page' => array(
+	    'home'      => array('label'=>'About Me', 'url'=>'my'),
+	    'blog'      => array('label'=>'My Blog', 'url'=>'my/blog'),
+	    'guestbook' => array('label'=>'Guestbook', 'url'=>'my/guestbook'),
+	  ),
+	);
+
+Här är två menyer definerade, en som heter __fresh-install__ och en som heter __example-page__. Man väljer vilken meny som ska användas genom att ange den i `$lt->config['theme']['menu_to_region']`, alltså i det här fallet:
+
+	$lt->config['theme']['menu_to_region'] => array('fresh-install'=>'navbar');
+
 
 ### Skapa en blogg ###
 

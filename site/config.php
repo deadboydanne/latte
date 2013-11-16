@@ -98,7 +98,7 @@ $lt->config['i18n'] = function_exists('gettext');
 /**
  * Define menus.
  *
- * Create hardcoded menus and map them to a theme region through $ly->config['theme'].
+ * Create hardcoded menus and map them to a theme region through $lt->config['theme'].
  */
 $lt->config['menus'] = array(
   'fresh-install' => array(

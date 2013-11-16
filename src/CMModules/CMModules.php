@@ -10,7 +10,7 @@ class CMModules extends CObject {
 	 * Properties
      */
 	 private $latteCoreModules = array('CLatte', 'CDatabase', 'CRequest', 'CViewContainer', 'CSession', 'CObject');
-	 private $latteCMFModules = array('CForm', 'CCPage', 'CCBlog', 'CMUser', 'CCUser', 'CMContent', 'CCContent', 'CFormUserLogin', 'CFormUserProfile', 'CFormUserCreate', 'CFormContent', 'CHTMLPurifier');
+	 private $latteCMFModules = array('CForm', 'CCPage', 'CCBlog', 'CMUser', 'CCUser', 'CMContent', 'CCContent', 'CCAdminControlPanel', 'CMAdminControlPanel', 'CFormUserLogin', 'CFormUserProfile', 'CFormUserCreate', 'CFormContent', 'CFormGroupCreate', 'CFormGroupProfile', 'CFormUserGroups', 'CHTMLPurifier', 'CImage', 'CCGallery', 'CMGallery');
 
 
   /**
