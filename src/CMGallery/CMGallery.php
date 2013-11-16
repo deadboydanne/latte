@@ -1,4 +1,7 @@
 <?php
+
+require_once 'src/CImage/CImage.php';
+
 /**
 * A model for content stored in database.
 * 
@@ -51,6 +54,7 @@ class CMGallery extends CObject implements IHasSQL, ArrayAccess, IModule {
       'select * by key'         => 'SELECT c.*, u.username as owner FROM Gallery AS c INNER JOIN User as u ON c.idUser=u.id WHERE c.linktext=?;',
       'select *'                => 'SELECT c.*, u.username as owner FROM Gallery AS c INNER JOIN User as u ON c.idUser=u.id;',
       'update content'          => "UPDATE Gallery SET title=?, text=?, updated=? WHERE id=?;",
+      'delete content'          => "DELETE FROM Gallery WHERE id=?;",
      );
     if(!isset($queries[$key])) {
       throw new Exception("No such SQL query, key '$key' was not found.");
@@ -73,10 +77,10 @@ class CMGallery extends CObject implements IHasSQL, ArrayAccess, IModule {
         try {
 	      $this->db->ExecuteQuery(self::SQL('drop table gallery'));
 	      $this->db->ExecuteQuery(self::SQL('create table gallery'));
-	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Högakustenbron', 'En stor bra långt upp i Sverige.', $user_id, date('Y-m-d H:i:s')));
-	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Grönt träd', 'Ett grönt träd på den irländska landsbygden.', $user_id, date('Y-m-d H:i:s')));
-	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Molnig himmel', 'En molnig himmel i augusti.', $user_id, date('Y-m-d H:i:s')));
-	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Norrsken', 'En kall natt i Abisko.', $user_id, date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Kalassvamp', 'En massa svampar som växer på en trädgren', $user_id, date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Snyggsvamp', 'En stor svamp som säkert är jättegiftig.', $user_id, date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Sidosvamp', 'En lite svamp som tittar ut från mossan.', $user_id, date('Y-m-d H:i:s')));
+	      $this->db->ExecuteQuery(self::SQL('insert content'), array('Gammalsvamp', 'En svamp som har sett sina bästa dagar.', $user_id, date('Y-m-d H:i:s')));
 	      return array('success', 'Successfully created the database table for the gallery.');
         } catch(Exception$e) {
           die("$e<br/>Failed to open database: " . $this->config['database'][$this->config['database']['type']]['dsn']);
@@ -99,17 +103,75 @@ class CMGallery extends CObject implements IHasSQL, ArrayAccess, IModule {
     $msg = null;
     if($this['id']) {
       $this->db->ExecuteQuery(self::SQL('update content'), array($this['title'], $this['text'], date('Y-m-d H:i:s'), $this['id']));
+    
+	  $img = WideImage::load('site/data'.$this['id'].'.jpg');
+	  
+      
+      foreach((array)$this['options']['checked'] as $option) {
+      switch($option) {
+      	case 'Flip':
+	      $img = $img->flip();
+		  break;
+      	case 'Mirror':
+	      $img = $img->mirror();
+		  break;
+      	case 'Negative':
+	      $img = $img->asNegative();
+		  break;
+      	case 'Grayscale':
+	      $img = $img->asGrayscale();
+		  break;
+      	case 'Sharpen':
+	      $img = $img->unsharp(200,2,3);
+		  break;
+      	case 'Round corners':
+	      $img = $img->roundCorners(40);
+		  break;
+      	case 'Add noise':
+	      $img = $img->addNoise(240,'salt&pepper');
+		  break;
+      }
+      $img->saveToFile('site/data/'.$this['id'].'.jpg');
+      }
       $msg = 'updated';
     } else {
       $this->db->ExecuteQuery(self::SQL('insert content'), array($this['title'], $this['text'], $this->user['id'], date('Y-m-d H:i:s')));
       $this['id'] = $this->db->LastInsertId();
-      $msg = 'created';
+      $img = WideImage::loadFromUpload('file');
+      $img = $img->resize(300, 300);
+      foreach((array)$this['options']['checked'] as $option) {
+      switch($option) {
+      	case 'Flip':
+	      $img = $img->flip();
+		  break;
+      	case 'Mirror':
+	      $img = $img->mirror();
+		  break;
+      	case 'Negative':
+	      $img = $img->asNegative();
+		  break;
+      	case 'Grayscale':
+	      $img = $img->asGrayscale();
+		  break;
+      	case 'Sharpen':
+	      $img = $img->unsharp(200,2,3);
+		  break;
+      	case 'Round corners':
+	      $img = $img->roundCorners(40);
+		  break;
+      	case 'Add noise':
+	      $img = $img->addNoise(240,'salt&pepper');
+		  break;
+      }
+      }
+      $img->saveToFile('site/data/'.$this['id'].'.jpg');
+      $msg = 'uploaded';
     }
     $rowcount = $this->db->RowCount();
     if($rowcount) {
-      $this->AddMessage('success', "Successfully {$msg} content '" . htmlEnt($this['linktext']) . "'.");
+      $this->AddMessage('success', "Successfully {$msg} the image '" . htmlEnt($this['title']) . "'.");
     } else {
-      $this->AddMessage('error', "Failed to {$msg} content '" . htmlEnt($this['linktext']) . "'.");
+      $this->AddMessage('error', "Failed to {$msg} image '" . htmlEnt($this['title']) . "'.");
     }
     return $rowcount === 1;
   }
@@ -128,6 +190,21 @@ class CMGallery extends CObject implements IHasSQL, ArrayAccess, IModule {
       return false;
     } else {
       $this->data = $res[0];
+    }
+    return true;
+  }
+  
+  
+  /**
+   * Load content by id.
+   *
+   * @param id integer the id of the content.
+   * @returns boolean true if success else false.
+   */
+  public function Delete() {
+    $this->db->ExecuteQuery(self::SQL('delete content'), array($this['id']));
+    if(file_exists('site/data/'.$this['id'].'.jpg')) {
+	    unlink('site/data/'.$this['id'].'.jpg');
     }
     return true;
   }

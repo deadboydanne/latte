@@ -7,7 +7,7 @@
 <?php endif; ?>
 
 
-<?=$form->GetHTML(array('class'=>'gallery-edit'))?>
+<?=$form->GetHTML(array('class'=>'gallery-edit', 'enctype'=>'multipart/form-data'))?>
 
 <p class='smaller-text'><em>
 <?php if($gallery['created']): ?>

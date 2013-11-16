@@ -128,6 +128,9 @@ class CFormElement implements ArrayAccess {
     else if($this['type'] == 'hidden') {
       return "<input id='$id'{$type}{$class}{$name}{$value} />\n"; 
     } 
+    else if($this['type'] == 'file') {
+      return "<input id='$id'{$type}{$class}{$name}{$value} />\n"; 
+    } 
     else if($this['type'] == 'checkbox') {
       return "<p><input id='$id'{$type}{$class}{$name}{$value}{$autofocus}{$required}{$readonly}{$checked} /><label for='$id'>$label</label>{$messages}</p>\n"; 
     } 
@@ -278,6 +281,21 @@ class CFormElementTextarea extends CFormElement {
   public function __construct($name, $attributes=array()) {
     parent::__construct($name, $attributes);
     $this['type'] = 'textarea';
+    $this->UseNameAsDefaultLabel();
+  }
+}
+
+
+class CFormElementFile extends CFormElement {
+  /**
+   * Constructor
+   *
+   * @param string name of the element.
+   * @param array attributes to set to the element. Default is an empty array.
+   */
+  public function __construct($name, $attributes=array()) {
+    parent::__construct($name, $attributes);
+    $this['type'] = 'file';
     $this->UseNameAsDefaultLabel();
   }
 }
@@ -507,9 +525,10 @@ class CForm implements ArrayAccess {
     $name   = isset($form['name'])    ? " name='{$form['name']}'" : null;
     $action = isset($form['action'])  ? " action='{$form['action']}'" : null;
     $method = isset($form['method'])  ? " method='{$form['method']}'" : " method='post'";
+    $enctype = isset($form['enctype'])  ? " enctype='{$form['enctype']}'" : null;
 
     if($options['start']) {
-      return "<form{$id}{$class}{$name}{$action}{$method}>\n";
+      return "<form{$id}{$class}{$name}{$action}{$method}{$enctype}>\n";
     }
     
     $fieldsetStart  = '<fieldset>';
@@ -522,7 +541,7 @@ class CForm implements ArrayAccess {
     $elements       = $this->GetHTMLLayoutForElements($elementsArray, $options);
     $output         = $this->GetOutput();
     $html = <<< EOD
-\n<form{$id}{$class}{$name}{$action}{$method}>
+\n<form{$id}{$class}{$name}{$action}{$method}{$enctype}>
 {$fieldsetStart}
 {$elements}
 {$output}
