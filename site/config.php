@@ -12,7 +12,6 @@ error_reporting(-1);
 ini_set('display_errors', 1);
 
 
-
 /**
 * Set database(s). Choose MySQL for now, might implement other later.
 */
