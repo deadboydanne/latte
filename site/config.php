@@ -111,6 +111,10 @@ $lt->config['menus'] = array(
     'setup'      => array('label'=>'Setup', 'url'=>'setup'),
     'acp'      => array('label'=>'Admin Control Panel', 'url'=>'acp'),
   ),
+  'en-liten-meny' => array(
+    'modules'   => array('label'=>'Modules', 'url'=>'module'),
+    'gallery'   => array('label'=>'Gallery', 'url'=>'gallery'),
+  ),
   'example-page' => array(
     'home'      => array('label'=>'About Me', 'url'=>'my'),
     'blog'      => array('label'=>'My Blog', 'url'=>'my/blog'),
@@ -155,7 +159,7 @@ $lt->config['theme'] = array(
   'name'    => 'bootstrap', 
   'stylesheet'  => 'style.css',   // Main stylesheet to include in template files
   'template_file'   => 'index.tpl.php',   // Default template file, else use default.tpl.php
-  'menu_to_region' => array('fresh-install'=>'navbar'),
+  'menu_to_region' => array('en-liten-meny'=>'navbar'),
 // Add static entries for use in the template file. 
   'data' => array(
     'header' => 'Latte',
